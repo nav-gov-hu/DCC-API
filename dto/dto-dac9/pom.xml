@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+          <groupId>hu.gov.nav.dcc.api</groupId>
+          <artifactId>dto</artifactId>
+          <version>1.0.0-rc.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>dto-dac9</artifactId>
+    <packaging>pom</packaging>
+
+    <name>dto-dac9</name>
+    <description>Nav DCC API DTO parent module for DAC9</description>
+
+    <modules>
+        <module>dto-dac9-jakarta</module>
+    </modules>
+
+</project>

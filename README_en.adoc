@@ -1,0 +1,108 @@
+= DCC API
+
+link:README.adoc[Hungarian version]
+
+Welcome to the public repository of the DCC API!
+
+== 1) Repository contents and purpose
+
+This project implements the API components of the 2011/16/EU Directive (DAC - Directive on Administrative Cooperation).
+Its goal is to establish a unified, secure and efficient electronic data exchange framework
+that consolidates and supports all data exchange processes prescribed by the EU DAC Directive between member states.
+The system creates a uniform foundation for interoperability, transparency and data security,
+promoting a higher level of tax cooperation within the European Union and beyond.
+
+Please note that although the repository is publicly accessible,
+a GitHub user account is required to contribute to reviews and development.
+A user account can be created for free in just a few minutes.
+
+The project contains XSD schemas,
+Jakarta EE DTO objects generated from them,
+and BOM (Bill of Materials) modules for dependency management.
+The project's schemas and types build upon the NAV common schema project https://github.com/nav-gov-hu/Common[Common],
+reusing its general XSD definitions and generated DTOs.
+DTO generation is based on XSD Catalog, which enables centralized management and reuse of schema elements.
+Generation is done using the https://github.com/highsource/jaxb-tools[jaxb-tools] Maven plugin.
+
+.Project structure
+[source, bash]
+----
+DCC-API
+├── bom
+│   ├── bom-all      # Full BOM (project + external dependencies)
+│   └── bom-project  # BOM for project internal modules
+├── schema
+│   ├── schema-auth  # Authentication XSD schemas (token API)
+│   └── schema-dac9  # DAC9 data exchange XSD schemas (globaltax API)
+└── dto
+    ├── dto-auth
+    │   └── dto-auth-jakarta  # Jakarta EE generated DTOs from auth schema
+    └── dto-dac9
+        └── dto-dac9-jakarta  # Jakarta EE generated DTOs from dac9 schema
+----
+
+== 2) Usage
+
+The project is Maven-based and requires Java 17.
+
+=== 2.1) Importing the BOM
+
+To simplify dependency version management, use the BOM:
+
+[source, xml]
+----
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>hu.gov.nav.dcc.api</groupId>
+            <artifactId>bom-project</artifactId>
+            <version>VERSION</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+----
+
+=== 2.2) Example module - Authentication (Auth)
+
+.XSD schemas only
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>schema-auth</artifactId>
+</dependency>
+----
+
+.XSD schemas + generated DTO objects (Jakarta EE)
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>dto-auth-jakarta</artifactId>
+</dependency>
+----
+
+=== 2.3) Quick integration guide
+
+For a typical DAC9 data exchange client project, the following steps are needed:
+
+. Add the BOM to the `dependencyManagement` section (see 2.1)
+. Add the required dependencies, e.g. auth + dac9:
+
+[source, xml]
+----
+<dependencies>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-auth-jakarta</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-dac9-jakarta</artifactId>
+    </dependency>
+</dependencies>
+----
+
+The `dto-auth-jakarta` and `dto-dac9-jakarta` artifacts transitively pull in the corresponding `schema-auth` / `schema-dac9` and the shared `hu.gov.nav.schemas.common2:dto-jakarta` dependency, so there is no need to add them separately.

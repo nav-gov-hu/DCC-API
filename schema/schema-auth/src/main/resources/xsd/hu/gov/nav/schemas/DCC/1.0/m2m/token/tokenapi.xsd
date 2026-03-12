@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://schemas.nav.gov.hu/DCC/1.0/m2m/token/tokenapi"
+    xmlns="http://schemas.nav.gov.hu/DCC/1.0/m2m/token/tokenapi"
+    xmlns:ntcaType="http://schemas.nav.gov.hu/NTCA/2.0/common/type"
+    xmlns:ntcaAuthService="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/type" />
+    <xs:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice" />
+
+    <!-- Simple types -->
+
+    <!-- Complex types -->
+
+    <!-- REQUEST/RESPONSE COMPLEX TYPES -->
+    <xs:complexType name="M2MTokenRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Token kérés típusa</xs:documentation>
+            <xs:documentation xml:lang="en">Request type of token</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="ntcaAuthService:AuthRequestType" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="M2MTokenResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Token válasz típusa</xs:documentation>
+            <xs:documentation xml:lang="en">Response type of token</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="ntcaAuthService:AuthResponseType">
+                <xs:sequence>
+                    <xs:element name="accessToken" type="ntcaType:GenericIdType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="hu">A hozzáférési token</xs:documentation>
+                            <xs:documentation xml:lang="en">The access token</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="accessTokenExpiryAt" type="ntcaType:GenericTimestampMilliType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="hu">A hozzáférési token lejárati dátuma</xs:documentation>
+                            <xs:documentation xml:lang="en">The access token expiry date</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- REQUEST/RESPONSE ELEMENTS -->
+    <xs:element name="M2MTokenRequest">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Token kérés gépi kommunikációhoz (M2M)</xs:documentation>
+            <xs:documentation xml:lang="en">Token request for machine-to-machine (M2M) communication</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="M2MTokenRequestType" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="M2MTokenResponse">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Token válasz gépi kommunikációhoz (M2M)</xs:documentation>
+            <xs:documentation xml:lang="en">Token response for machine-to-machine (M2M) communication</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="M2MTokenResponseType" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi"
+    xmlns="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi"
+    xmlns:ntcaString="http://schemas.nav.gov.hu/NTCA/2.0/common/string"
+    xmlns:ntcaType="http://schemas.nav.gov.hu/NTCA/2.0/common/type"
+    xmlns:ntcaService="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/string" />
+    <xs:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/type" />
+    <xs:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/service" />
+
+    <!-- Simple types -->
+    <xs:simpleType name="ReportTypeType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">A DAC-9 globális minimumadó jelentés típusa.</xs:documentation>
+            <xs:documentation xml:lang="en">The report type of DAC-9 global minimum level of taxation.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="ntcaString:SimpleText15NotBlankType">
+            <xs:enumeration value="GLOBE_OECD_V1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Globális minimumadó szint a multinacionális vállalatcsoportok (MNE-k) és a nagy léptékű hazai
+                        csoportok (LSDG-k) számára az EU-ban.</xs:documentation>
+                    <xs:documentation xml:lang="en">Global minimum level of taxation for multinational enterprise groups (MNEs) and large-scale
+                        domestic groups (LSDGs) in the EU.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FileStatusType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Fájl státusz típusa.</xs:documentation>
+            <xs:documentation xml:lang="en">File status type.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="ntcaString:AtomicStringType10">
+            <xs:enumeration value="UPLOADED">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Feltöltve.</xs:documentation>
+                    <xs:documentation xml:lang="en">Uploaded.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VALIDATING">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Ellenőrzés alatt.</xs:documentation>
+                    <xs:documentation xml:lang="en">Under validation.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VALID">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Érvényes.</xs:documentation>
+                    <xs:documentation xml:lang="en">Valid.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="INVALID">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Érvénytelen.</xs:documentation>
+                    <xs:documentation xml:lang="en">Invalid.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Complex types -->
+    <xs:complexType name="ReportStatusType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Jelentés állapotának típusa.</xs:documentation>
+            <xs:documentation xml:lang="en">The type of the report status.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="status" type="FileStatusType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">A jelentés státusza.</xs:documentation>
+                    <xs:documentation xml:lang="en">The status of the report.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="errorCode" type="ntcaString:AtomicStringType30" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">A hibakód.</xs:documentation>
+                    <xs:documentation xml:lang="en">The error code.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="anomaly" type="ntcaService:DtoValidationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Validációs anomália.</xs:documentation>
+                    <xs:documentation xml:lang="en">Validation anomaly.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- REQUEST/RESPONSE COMPLEX TYPES -->
+    <xs:complexType name="GlobalTaxRequestType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">DAC-9 globális minimumadó jelentés regisztrációs kérelem típusa.</xs:documentation>
+            <xs:documentation xml:lang="en">Request type of DAC-9 global minimum level of taxation report registration.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="ntcaService:BaseRequestType">
+                <xs:sequence>
+                    <xs:element name="compressedContent" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="hu">Tömörített tartalom jelzése a feldolgozási folyamat számára.</xs:documentation>
+                            <xs:documentation xml:lang="en">Compressed content indicator for the processing flow.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="reportType" type="ReportTypeType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="hu">Jelentés típusa a regisztrációs kérelemben.</xs:documentation>
+                            <xs:documentation xml:lang="en">Report type in the registration request.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="reportChecksum" type="ntcaType:CryptoType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="hu">A jelentés ellenőrző összege a tartalom integritásának ellenőrzéséhez. Ha tartalom
+                                tömörített, a kitömörített tartalom ellenőrző összege.</xs:documentation>
+                            <xs:documentation xml:lang="en">The checksum value of the report for content integrity verification. If the content is
+                                compressed, the checksum of the decompressed content.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GlobalTaxResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">DAC-9 globális minimumadó jelentés válasz típusa.</xs:documentation>
+            <xs:documentation xml:lang="en">Response type of DAC-9 global minimum level of taxation report.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="ntcaService:BaseResponseType">
+                <xs:sequence>
+                    <xs:element name="globalTaxReportId" type="ntcaType:GenericIdType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="hu">A kért operáció tranzakció azonosítója.</xs:documentation>
+                            <xs:documentation xml:lang="en">Transaction identifier of the requested operation.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ReportStatusResponseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Jelentés technikai státusz válasz típusa.</xs:documentation>
+            <xs:documentation xml:lang="en">Response type of the report technical status.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="ntcaService:BaseResponseType">
+                <xs:sequence>
+                    <xs:element name="reportStatus" type="ReportStatusType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="hu">Beküldött jelentés ellenőrzési státusza.</xs:documentation>
+                            <xs:documentation xml:lang="en">The validation status of the submitted report.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- REQUEST/RESPONSE ELEMENTS -->
+    <xs:element name="GlobalTaxRequest">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">DAC-9 globális minimumadó jelentés regisztrációs kérelem többnemzetiségű vállalatcsoportok (MNE-k) és nagy
+                létszámú belföldi vállalatcsoportok (LSDG-k) számára az EU-ban.</xs:documentation>
+            <xs:documentation xml:lang="en">Request of DAC-9 global minimum level of taxation report registration for multinational enterprise groups
+                (MNEs) and large-scale domestic groups (LSDGs) in the EU.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="GlobalTaxRequestType" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GlobalTaxResponse">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">DAC-9 globális minimumadó jelentés válasz többnemzetiségű vállalatcsoportok (MNE-k) és nagy létszámú
+                belföldi vállalatcsoportok (LSDG-k) számára az EU-ban.</xs:documentation>
+            <xs:documentation xml:lang="en">Response of DAC-9 global minimum level of taxation for multinational enterprise groups (MNEs) and
+                large-scale domestic groups (LSDGs) in the EU.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="GlobalTaxResponseType" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReportStatusResponse">
+        <xs:annotation>
+            <xs:documentation xml:lang="hu">Jelentés technikai státusz válasz.</xs:documentation>
+            <xs:documentation xml:lang="en">Response of the report technical status.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ReportStatusResponseType" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

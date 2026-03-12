@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+          <groupId>hu.gov.nav.dcc.api</groupId>
+          <artifactId>dto-dac9</artifactId>
+          <version>1.0.0-rc.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>dto-dac9-jakarta</artifactId>
+    
+    <name>dto-dac9-jakarta</name>
+    <description>Nav DCC API DTO DAC9 module for Jakarta EE</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>hu.gov.nav.schemas.common2</groupId>
+            <artifactId>dto-jakarta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>hu.gov.nav.dcc.api</groupId>
+            <artifactId>schema-dac9</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- More info: https://github.com/highsource/jaxb-tools -->
+            <plugin>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb-maven-plugin</artifactId>
+                <version>4.0.9</version>
+                <executions>
+                    <execution>
+                        <id>dcc-super</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <episodes>
+                                <episode>
+                                    <groupId>hu.gov.nav.schemas.common2</groupId>
+                                    <artifactId>dto-jakarta</artifactId>
+                                </episode>
+                            </episodes>
+                            <strict>false</strict>
+                            <catalog>src/main/resources/catalog/catalog.cat</catalog>
+                            <schemaIncludes>
+                                <include>catalog/all-in-one.xsd</include>
+                            </schemaIncludes>
+                            <bindingIncludes>
+                                <include>xjb/bindings.xjb</include>
+                            </bindingIncludes>
+                            <generateDirectory>
+                                ${project.build.directory}/generated-sources/src/main/java</generateDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <schemaDirectory>src/main/resources</schemaDirectory>
+                    <args>
+                        <arguments>-Xfluent-api</arguments>
+                        <arguments>-Xannotate</arguments>
+                    </args>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-fluent-api</artifactId>
+                            <version>3.0</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb</groupId>
+                            <artifactId>jaxb-plugin-annotate</artifactId>
+                            <version>4.0.8</version>
+                        </plugin>
+                    </plugins>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

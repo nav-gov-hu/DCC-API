@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>bom</artifactId>
+        <version>1.0.0-rc.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>bom-project</artifactId>
+    <packaging>pom</packaging>
+
+    <name>bom-project</name>
+    <description>Nav DCC API project BOM definitions</description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>schema-auth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>schema-dac9</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>dto-auth-jakarta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>dto-dac9-jakarta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

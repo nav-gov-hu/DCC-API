@@ -1,0 +1,108 @@
+= DCC API
+
+link:README_en.adoc[English version]
+
+Üdvözöljük a DCC API publikus tárhelyén!
+
+== 1) A tárhely tartalma és célja
+
+A projekt a 2011/16/EU irányelv (DAC - Directive on Administrative Cooperation) API részeit valósítja meg.
+Célja egy egységes, biztonságos és hatékony elektronikus adatcsere-keretrendszer kialakítása,
+amely összefogja és támogatja az EU DAC irányelv által előírt valamennyi adatcsere-folyamatot a tagállamok között.
+A rendszer megteremti az interoperabilitás, az átláthatóság és az adatbiztonság egységes alapjait,
+elősegítve az adóügyi együttműködés magasabb szintjét az Európai Unióban és a határain túl.
+
+Kérjük figyelembe venni, hogy bár a tárhely publikusan elérhető,
+a véleményezéshez és a fejlesztéshez hozzájáruláshoz GitHub userre van szükség.
+A felhasználó ingyenesen, pár perc alatt létrehozható.
+
+A projekt tartalma az XSD sémák,
+az azokból generált Jakarta EE DTO objektumok,
+valamint BOM (Bill of Materials) modulok a függőségkezeléshez.
+A projekt sémái és típusai a NAV közös sémaleíró projektjére, a https://github.com/nav-gov-hu/Common[Common]-re épülnek,
+annak általános XSD definícióit és generált DTO-it felhasználva.
+A DTO generálás XSD Catalog alapon működik, ami lehetővé teszi a séma elemek központi kezelését és újrahasználatát.
+A generálás a https://github.com/highsource/jaxb-tools[jaxb-tools] Maven plugin használatával történik.
+
+.Projekt struktúra
+[source, bash]
+----
+DCC-API
+├── bom
+│   ├── bom-all      # Teljes BOM (projekt + külső függőségek)
+│   └── bom-project  # Projekt belső moduljainak BOM-ja
+├── schema
+│   ├── schema-auth  # Autentikációs XSD sémák (token API)
+│   └── schema-dac9  # DAC9 adatcsere XSD sémák (globaltax API)
+└── dto
+    ├── dto-auth
+    │   └── dto-auth-jakarta  # Jakarta EE generált DTO-k az auth sémából
+    └── dto-dac9
+        └── dto-dac9-jakarta  # Jakarta EE generált DTO-k a dac9 sémából
+----
+
+== 2) Használat
+
+A projekt Maven alapú, Java 17-et igényel.
+
+=== 2.1) BOM importálása
+
+A függőségek verziókezelésének egyszerűsítéséhez használható a BOM:
+
+[source, xml]
+----
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>hu.gov.nav.dcc.api</groupId>
+            <artifactId>bom-project</artifactId>
+            <version>VERSION</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+----
+
+=== 2.2) Minta modul bekötése - Authentication (Auth)
+
+.Csak XSD sémák
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>schema-auth</artifactId>
+</dependency>
+----
+
+.XSD sémák + generált DTO objektumok (Jakarta EE)
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>dto-auth-jakarta</artifactId>
+</dependency>
+----
+
+=== 2.3) Gyors bekötési útmutató
+
+Egy tipikus DAC9 adatcsere kliens projektben az alábbi lépések szükségesek:
+
+. Adjuk hozzá a BOM-ot a `dependencyManagement` szekcióhoz (lásd 2.1)
+. Vegyük fel a szükséges függőségeket, pl. auth + dac9:
+
+[source, xml]
+----
+<dependencies>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-auth-jakarta</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-dac9-jakarta</artifactId>
+    </dependency>
+</dependencies>
+----
+
+A `dto-auth-jakarta` és `dto-dac9-jakarta` tranzitívan behúzza a megfelelő `schema-auth` / `schema-dac9` és a közös `hu.gov.nav.schemas.common2:dto-jakarta` függőséget is, így külön nem szükséges azokat felvenni.
