@@ -1,0 +1,235 @@
+= DTO generálás
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+link:index.html[Vissza a főoldalra]
+
+== Áttekintés
+
+A DCC API projekt nem tartalmaz kézzel írt Java forráskódot.
+Az összes Java osztály (DTO – Data Transfer Object) az XSD sémákból generálódik
+build időben, a JAXB (Jakarta XML Binding) Maven plugin segítségével.
+
+A generálás a következő technológiákat alkalmazza:
+
+* *Jakarta EE JAXB 3.0* – XML-Java kötés
+* *XSD Catalog* – Névtér feloldás Maven artifact-okból
+* *JAXB plugin kiegészítők* – Fluent API és annotáció kezelés
+* *Episode fájlok* – Közös típusok duplikáció-mentes generálása
+
+== DTO modulok
+
+[cols="1,1,2"]
+|===
+| Modul | ArtifactId | Leírás
+
+| Auth DTO
+| `dto-auth-jakarta`
+| Jakarta EE DTO-k a Token API (pl. `tokenapi.xsd`) sémából
+
+| DAC9 DTO
+| `dto-dac9-jakarta`
+| Jakarta EE DTO-k a Global Tax API (pl. `globaltaxapi.xsd`) sémából
+|===
+
+== Generálási folyamat
+
+A generálás a `org.jvnet.jaxb:jaxb-maven-plugin:4.0.9` plugin segítségével történik,
+a `generate` goal futtatásával a Maven build `generate-sources` fázisában.
+
+=== Lépések
+
+. A plugin beolvassa az `all-in-one.xsd` aggregátor sémát
+. Az OASIS XML Catalog (`catalog.cat`) feloldja a névtereket a megfelelő Maven artifact-okra
+. A JAXB kötési fájl (`bindings.xjb`) alkalmazásra kerül
+. A közös típusok Episode fájlból származnak (nem generálódnak újra)
+. A generált Java osztályok a `target/generated-sources/src/main/java` könyvtárba kerülnek
+
+=== Generálási konfiguráció
+
+[source,xml]
+----
+<plugin>
+    <groupId>org.jvnet.jaxb</groupId>
+    <artifactId>jaxb-maven-plugin</artifactId>
+    <version>4.0.9</version>
+    <executions>
+        <execution>
+            <id>dcc-super</id>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                <episodes>
+                    <episode>
+                        <groupId>hu.gov.nav.schemas.common2</groupId>
+                        <artifactId>dto-jakarta</artifactId>
+                    </episode>
+                </episodes>
+                <strict>false</strict>
+                <catalog>src/main/resources/catalog/catalog.cat</catalog>
+                <schemaIncludes>
+                    <include>catalog/all-in-one.xsd</include>
+                </schemaIncludes>
+                <bindingIncludes>
+                    <include>xjb/bindings.xjb</include>
+                </bindingIncludes>
+                <generateDirectory>
+                    ${project.build.directory}/generated-sources/src/main/java
+                </generateDirectory>
+            </configuration>
+        </execution>
+    </executions>
+    <configuration>
+        <verbose>true</verbose>
+        <schemaDirectory>src/main/resources</schemaDirectory>
+        <args>
+            <arguments>-Xfluent-api</arguments>
+            <arguments>-Xannotate</arguments>
+        </args>
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.jaxb2_commons</groupId>
+                <artifactId>jaxb2-fluent-api</artifactId>
+                <version>3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb-plugin-annotate</artifactId>
+                <version>4.0.8</version>
+            </plugin>
+        </plugins>
+    </configuration>
+</plugin>
+----
+
+== XSD Catalog rendszer
+
+Az XSD Catalog az OASIS XML Catalog szabvány szerint működik.
+A `catalog.cat` fájlok a névtereket Maven artifact-okra képezik le,
+lehetővé téve a sémák moduláris felhasználását.
+
+=== Catalog bejegyzések (Minta)
+
+[source,xml]
+----
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+    <!-- NTCA 2.0 közös sémák (Common projekt) -->
+    <public publicId="http://schemas.nav.gov.hu/NTCA/2.0/common/string"
+        uri="maven:hu.gov.nav.schemas.common2:schemas:jar::!/xsd/.../string.xsd" />
+    <public publicId="http://schemas.nav.gov.hu/NTCA/2.0/common/type"
+        uri="maven:hu.gov.nav.schemas.common2:schemas:jar::!/xsd/.../type.xsd" />
+    <!-- ... további NTCA névterek ... -->
+
+    <!-- DCC Auth séma -->
+    <public publicId="http://schemas.nav.gov.hu/DCC/1.0/m2m/token/tokenapi"
+        uri="maven:hu.gov.nav.dcc.api:schema-auth:jar::!/xsd/.../tokenapi.xsd" />
+
+</catalog>
+----
+
+=== All-in-one aggregátor séma
+
+Az `all-in-one.xsd` egy aggregátor séma, amely az összes szükséges névteret importálja
+egyetlen belépési pontként a JAXB generátor számára:
+
+[source,xml]
+----
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://catalog.schemas.nav.gov.hu/DCC/1.0/common/all-in-one">
+
+    <!-- NTCA 2.0 közös névterek -->
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/string" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/type" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/customer" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/paging" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/entity" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/service" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice" />
+
+    <!-- DCC modul-specifikus séma -->
+    <xsd:import namespace="http://schemas.nav.gov.hu/DCC/1.0/m2m/token/tokenapi" />
+
+</xsd:schema>
+----
+
+== JAXB kötési konfiguráció
+
+A `bindings.xjb` fájl az alábbi globális beállításokat tartalmazza:
+
+=== generateIsSetMethod
+
+[source,xml]
+----
+<jaxb:globalBindings generateIsSetMethod="true">
+----
+
+Opcionális mezőkhöz `isSet*()` metódusok is generálódnak, amelyekkel ellenőrizhető,
+hogy az adott mező be volt-e állítva (null-tól eltérő értékkel).
+
+=== Dátum/idő típus leképezések
+
+[cols="1,1,1"]
+|===
+| XSD típus | Java típus | Adapter osztály
+
+| `xsd:date`
+| `java.time.LocalDate`
+| `LocalDateXmlAdapter`
+
+| `xsd:time`
+| `java.time.OffsetTime`
+| `UtcOffsetTimeXmlAdapter`
+
+| `xsd:dateTime`
+| `java.time.OffsetDateTime`
+| `UtcOffsetDateTimeXmlAdapter`
+|===
+
+Az adapter osztályok a `hu.gov.nav.schemas.common2.core.adapter` csomagban találhatók
+(a Common projekt `dto-jakarta` moduljában).
+
+== Episode mechanizmus
+
+Az Episode fájlok biztosítják, hogy a közös NTCA 2.0 típusok (pl. `GenericIdType`, `BaseRequestType`)
+ne generálódjanak újra minden DTO modulban. Ehelyett a `hu.gov.nav.schemas.common2:dto-jakarta`
+artifact Episode fájlját referálja a plugin, így csak a DCC-specifikus típusok kerülnek generálásra.
+
+.Episode konfiguráció
+[source,xml]
+----
+<episodes>
+    <episode>
+        <groupId>hu.gov.nav.schemas.common2</groupId>
+        <artifactId>dto-jakarta</artifactId>
+    </episode>
+</episodes>
+----
+
+== JAXB plugin kiegészítők
+
+=== Fluent API (`-Xfluent-api`)
+
+A `jaxb2-fluent-api:3.0` kiegészítő fluent (láncolható) setter metódusokat generál:
+
+[source,java]
+----
+// Standard JAXB
+request.setCompressedContent(true);
+request.setReportType(ReportTypeType.GLOBE_OECD_V_1);
+
+// Fluent API
+request.withCompressedContent(true)
+       .withReportType(ReportTypeType.GLOBE_OECD_V_1);
+----
+
+=== Annotate (`-Xannotate`)
+
+A `jaxb-plugin-annotate:4.0.8` kiegészítő lehetővé teszi egyedi annotációk hozzáadását
+a generált osztályokhoz a kötési fájlon keresztül.

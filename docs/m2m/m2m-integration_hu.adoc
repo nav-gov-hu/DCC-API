@@ -1,0 +1,123 @@
+= M2M integrációs útmutató
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+link:../index.html[Vissza a főoldalra]
+
+== Áttekintés
+
+Ez a dokumentum az M2M (Machine-to-Machine) gépi interfész csatlakozásának útmutatóját tartalmazza
+külső kliensek számára. A DCC API következő M2M funkciókat biztosít:
+
+. *Autentikáció* - Token igénylés az M2M kommunikációhoz
+. *DAC9 jelentés beküldés* - Globális minimumadó jelentés kezelése
+
+== Integrációs folyamat áttekintése
+
+[source,text]
+----
+┌────────────────┐                         ┌─────────────────┐
+│  Külső kliens  │                         │   NAV DCC API   │
+│  (M2M partner) │                         │    szerver      │
+└───────┬────────┘                         └────────┬────────┘
+        │                                           │
+        │  1. M2MTokenRequest                       │
+        │ ────────────────────────────────────────► │
+        │                                           │
+        │  2. M2MTokenResponse (accessToken)        │
+        │ ◄──────────────────────────────────────── │
+        │                                           │
+        │  3. GlobalTaxRequest + accessToken        │
+        │ ────────────────────────────────────────► │
+        │                                           │
+        │  4. GlobalTaxResponse (globalTaxReportId) │
+        │ ◄──────────────────────────────────────── │
+        │                                           │
+        │  5. ReportStatus + accessToken            │
+        │ ────────────────────────────────────────► │
+        │                                           │
+        │  6. ReportStatusResponse                  │
+        │ ◄──────────────────────────────────────── │
+        │                                           │
+----
+
+include::auth_hu.adoc[leveloffset=+1]
+include::dac9/globaltax_hu.adoc[leveloffset=+1]
+include::dac9/globaltax-status_hu.adoc[leveloffset=+1]
+
+== Java kliens példa
+
+A `dto-auth-jakarta` és `dto-dac9-jakarta` Maven modulok felhasználásával
+a kérés-válasz objektumok közvetlenül Java-ból is kezelhetők.
+
+=== Maven függőségek
+
+[source,xml]
+----
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>hu.gov.nav.dcc.api</groupId>
+            <artifactId>bom-project</artifactId>
+            <version>VERSION</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+<dependencies>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-auth-jakarta</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-dac9-jakarta</artifactId>
+    </dependency>
+</dependencies>
+----
+
+=== Token kérés összeállítása
+
+[source,java]
+----
+import hu.gov.nav.schemas.dcc._1_0.m2m.token.tokenapi.M2MTokenRequest;
+import hu.gov.nav.schemas.dcc._1_0.m2m.token.tokenapi.M2MTokenResponseType;
+
+// Token kérés létrehozása (fluent API)
+M2MTokenRequest tokenRequest = new M2MTokenRequest();
+// ... fejléc, felhasználó, szoftver adatok beállítása
+
+// Válasz feldolgozása
+M2MTokenResponseType response = // ... HTTP hívás eredménye
+String accessToken = response.getAccessToken();
+OffsetDateTime expiryAt = response.getAccessTokenExpiryAt();
+----
+
+=== DAC9 jelentés beküldés
+
+[source,java]
+----
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac9.globaltax.globaltaxapi.GlobalTaxRequest;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac9.globaltax.globaltaxapi.GlobalTaxResponseType;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac9.globaltax.globaltaxapi.ReportStatusResponseType;
+
+// Jelentés regisztráció kérés
+GlobalTaxRequest request = new GlobalTaxRequest();
+request.setCompressedContent(true);
+request.setReportType(ReportTypeType.GLOBE_OECD_V_1);
+// ... checksum beállítása
+
+// Válasz feldolgozása
+GlobalTaxResponseType taxResponse = // ... HTTP hívás eredménye
+String reportId = taxResponse.getGlobalTaxReportId();
+
+// Státusz lekérdezés
+ReportStatusResponseType statusResponse = // ... HTTP hívás eredménye
+FileStatusType status = statusResponse.getReportStatus().getStatus();
+----
