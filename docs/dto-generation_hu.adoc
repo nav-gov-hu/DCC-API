@@ -6,10 +6,6 @@
 :source-highlighter: highlight.js
 :nofooter:
 
-link:index.html[Vissza a főoldalra]
-
-== Áttekintés
-
 A DCC API projekt nem tartalmaz kézzel írt Java forráskódot.
 Az összes Java osztály (DTO – Data Transfer Object) az XSD sémákból generálódik
 build időben, a JAXB (Jakarta XML Binding) Maven plugin segítségével.

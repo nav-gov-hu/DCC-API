@@ -41,3 +41,7 @@ A projekt a NAV közös sémaleíró projektjére épül:
 * https://github.com/nav-gov-hu/Common[*Common*] (`hu.gov.nav.schemas.common2`) - Általános NTCA 2.0 XSD definíciók és Jakarta EE DTO-k.
   A DCC API sémái és típusai erre a projektre épülnek, felhasználva annak
   string, type, customer, paging, entity, service és authservice névtereit.
+
+include::architecture_hu.adoc[leveloffset=+1]
+include::m2m/m2m-integration_hu.adoc[leveloffset=+1]
+include::dto-generation_hu.adoc[leveloffset=+1]

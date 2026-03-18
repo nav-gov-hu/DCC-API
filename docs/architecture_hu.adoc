@@ -6,10 +6,6 @@
 :source-highlighter: highlight.js
 :nofooter:
 
-link:index.html[Vissza a főoldalra]
-
-== Áttekintés
-
 A DCC API egy többmodulos Maven projekt, amely a NAV DAC (Directive on Administrative Cooperation)
 M2M interfész sémadefinícióit tartalmazza. A projekt három fő réteget definiál:
 
@@ -68,22 +64,7 @@ Jakarta EE DTO osztályok, amelyek az `schema-dac9` XSD sémáiból generálódn
 
 == Függőségi diagram
 
-[source,text]
-----
-                 ┌────────────────┐
-                 │    dcc-api     │
-                 └────┬──────┬────┘
-                      │      │
-                ┌─────┘      └────┐
-                ▼                 ▼
-           ┌──────────┐      ┌──────────┐
-           │  schema  │      │   dto    │
-           └──┬───┬───┘      └──┬───┬───┘
-         ┌────┘   └─┐         ┌─┘   └────┐
-         ▼          ▼         ▼          ▼
-      schema-    schema-   dto-auth   dto-dac9
-       auth       dac9     jakarta    jakarta
-----
+image::images/DCC-API-architecture.drawio.png[align="center", alt="DCC API modul függőségi diagram"]
 
 == Névtér stratégia
 

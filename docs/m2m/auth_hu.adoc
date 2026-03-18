@@ -7,7 +7,6 @@ A hozzáférési token igénylése HTTP POST kéréssel történik, ahol a köve
 
 * *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/token`
 * *HTTP metódus:* POST
-* TLS 1.3 vagy újabb verzió használata kötelező
 * *Fejlécek:*
 ** `Accept: text/xml vagy application/xml`
 
@@ -27,15 +26,65 @@ hitelesítési fejlécet, felhasználói adatokat és szoftver azonosítót.
         <timestamp>2026-03-13T10:02:55.37291704Z</timestamp>
     </context>
     <ns2:auth>
-        <ns2:login>m2m_user_example</ns2:login>
-        <ns2:passwordHash cryptoType="SHA-512">5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</ns2:passwordHash>
-        <ns2:taxNumber>12345678</ns2:taxNumber>
-        <ns2:predecessorTaxNumber></ns2:predecessorTaxNumber>
-        <ns2:requestSignature cryptoType="SHA3-512">12345898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d185255</ns2:requestSignature>
+        <ns2:login>m2m_user_example</ns2:login> <1>
+        <ns2:passwordHash cryptoType="SHA-512">5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8</ns2:passwordHash> <2>
+        <ns2:taxNumber>12345678</ns2:taxNumber> <3>
+        <ns2:predecessorTaxNumber></ns2:predecessorTaxNumber> <4>
+        <ns2:requestSignature cryptoType="SHA3-512">12345898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D185255</ns2:requestSignature> <5>
     </ns2:auth>
-    <ns2:requestVersion>1.0</ns2:requestVersion>
-    <ns2:headerVersion>1.0</ns2:headerVersion>
+    <ns2:requestVersion>1.0</ns2:requestVersion> <6>
+    <ns2:headerVersion>1.0</ns2:headerVersion> <7>
 </ns3:M2MTokenRequest>
+----
+<1> A `login` tag a technikai felhasználó nevét tartalmazza.
+A login nevet a rendszer véletlenszerűen generálja a technikai felhasználó létrehozásakor 15 karakter hosszan.
+A login tag az authentikáció egyik eleme.
+<2> A `passwordHash` a login tagban szereplő technikai felhasználó jelszavának *nagybetűs* SHA-512 hash értéke.
+A literál jelszót a technikai felhasználót létrehozó elsődleges felhasználó adja meg az Online Számla webfelületen.
+A passwordHash az authentikáció egyik eleme.
+Egyetlen elfogadott értéke: SHA-512.
+<3> A `taxNumber` azon adózó adószámának első 8 száma, aki nevében a technikai felhasználó tevékenykedik, és akihez tartozik.
+Csak magyar adószám az elfogadott.
+<4> A `predecessorTaxNumber` amennyiben megadásra kerül, akkor validálásra kerül,
+hogy a taxNumber tagben megadott adózóval jogelőd viszonyban áll-e.
+A jogelőd viszony rekurzívan kerül ellenőrzésre, közvetett jogelőd megadása is elfogadott.
+A predecessorTaxNumber megadása befolyásolja az operációk üzleti logikáját.
+<5> A `requestSignature` a kliens által generált aláírása az üzenetnek.
+Minden kéréshez kötelezően tartoznia kell egy requestSignature-nek.
+A szerver a kérésben szereplő adatok alapján elvégzi a saját requestSignature számítását és csak akkor hajtja végre a kérést,
+ha a tárolt és kapott adatokból a helyes érték ténylegesen előállítható.
+A requestSignature számításáról a „requestSignature számítása” fejezet nyújt tájékoztatást.
+Egyetlen elfogadott értéke: SHA3-512.
+<6> A `requestVersion` a kérés verzióját jelöli, nem kötelező - ilyenkor a rendszer "1.0" értéket fog kezelni. Jelenleg csak a "1.0" érték fogadható el.
+<7> A `headerVersion` a fejléc verzióját jelöli, nem kötelező - ilyenkor a rendszer "1.0" értéket fog kezelni. Jelenleg csak a "1.0" érték fogadható el.
+
+=== requestSignature számítására
+A `requestSignature` az interfész-authentikáció egyik fő eleme.
+A szerepe, hogy illetéktelenek ne tudjanak a rendszerben változtatásokat végrehajtani.
+A hash értéket a szerver oldal minden operáció minden kérésénél ellenőrzi,
+és csak akkor hajtja végre a műveletet, ha a tárolt és kapott adatokból a helyes érték ténylegesen előállítható.
+
+A `requestSignature` számítására a következő mezők értékeinek konkatenációjával történik, sorrendben:
+
+. requestId értéke (esetünkben "019ce6a6-2a0c-7207-b3f4-cc8373579c7c")
+. a timestamp tag értéke "yyyyMMddHHmmss" maszkkal, UTC időben (esetünkben "20260313100255")
+. a technikai felhasználó aláírókulcsának literál értéke (technikai felhasználó létrehozásakor megadott érték).
+Példához ennek legyen az értéke "ce-8f5e-215119fa7dd621DLMRHRLH2S"
+
+Az így és sorrendben konkatenált string SHA3-512 hash eredménye lesz a `requestSignature` értéke.
+
+.algoritmus
+[source,text]
+----
+requestSignature = SHA3-512(requestId + timestamp + signingKey).UPPERCASE()
+
+requestSignature = SHA3-512(019ce6a6-2a0c-7207-b3f4-cc8373579c7c + 20260313100255 + ce-8f5e-215119fa7dd621DLMRHRLH2S).UPPERCASE()
+
+requestSignature = SHA3-512(019ce6a6-2a0c-7207-b3f4-cc8373579c7c20260313100255ce-8f5e-215119fa7dd621DLMRHRLH2S).UPPERCASE()
+
+requestSignature = 6498e406186580da6403680fd3a6a008fd7f207ca2afde5885c38ac700a9a52a3baadee914fa0649dbbe103d2d6e99b1236da403cdd5ef338245a4474770d591.UPPERCASE()
+
+requestSignature = 6498E406186580DA6403680FD3A6A008FD7F207CA2AFDE5885C38AC700A9A52A3BAADEE914FA0649DBBE103D2D6E99B1236DA403CDD5EF338245A4474770D591
 ----
 
 == Válasz: M2MTokenResponse

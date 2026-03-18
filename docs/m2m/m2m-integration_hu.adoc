@@ -6,44 +6,33 @@
 :source-highlighter: highlight.js
 :nofooter:
 
-link:../index.html[Vissza a főoldalra]
-
-== Áttekintés
-
-Ez a dokumentum az M2M (Machine-to-Machine) gépi interfész csatlakozásának útmutatóját tartalmazza
+Ez a fejezet az M2M (Machine-to-Machine) gépi interfész csatlakozásának útmutatóját tartalmazza
 külső kliensek számára. A DCC API következő M2M funkciókat biztosít:
 
 . *Autentikáció* - Token igénylés az M2M kommunikációhoz
 . *DAC9 jelentés beküldés* - Globális minimumadó jelentés kezelése
 
+Általános Http kommunikációs szabályok:
+
+* *TLS 1.3* vagy újabb verzió használata kötelező
+* Request/Response *XML formátum*, ha csak az adott végpont nem ír elő más formátumot.
+* Karaketer kódolás *UTF-8* minden esetben.
+* Befogadott request méret maximálisan 1 MB, ha csak az adott végpont nem ír elő más méretkorlátot.
+* Tömörítés *GZIP* formátumban. Ha valahol tömörített adatot kell küldeni, akkor tömörítéskor a leggyorsabb, legkevésbé tömörítő, 1-es compression ratio kerüljön alkalmazásra („gzip -1 [FILE]”).
+* A szerver jellemzően *300ms alatti* válaszidőkkel szolgál ki.
+* A szinkronhívások blokkoló timeout értéke 5000 ms.
+Kérjük, hogy kliens oldalon a fenti értéket meghaladó válaszidőt kezeljék csak időtúllépésként!
+Az abszolút timeout értéke 60 sec.
+Ha egy adatszolgáltatásra nem érkezik válasz a 60 másodperces timeout miatt, még nem jelenti a beküldés sikertelenségét.
+* A szerver az időbeállításokat egy zárt, a külvilág számára nem hozzáférhető NTP szervertől kapja.
+Kliens oldalon a szerveridőhöz szinkronizálás nem követelmény,
+azonban opcionálisan a következő időszinkronizáció lehetséges: http://www.pool.ntp.org/zone/hu (a csatlakozáshoz NTP kliensre van szükség).
+* A kliensektől elvárt hogy számítsanak az API verzióváltására (előre bejelentett, tervezhető időkkel),
+és a kérés-válasz feldolgozásakor a verziószámot is vegyék figyelembe.
+
 == Integrációs folyamat áttekintése
 
-[source,text]
-----
-┌────────────────┐                         ┌─────────────────┐
-│  Külső kliens  │                         │   NAV DCC API   │
-│  (M2M partner) │                         │    szerver      │
-└───────┬────────┘                         └────────┬────────┘
-        │                                           │
-        │  1. M2MTokenRequest                       │
-        │ ────────────────────────────────────────► │
-        │                                           │
-        │  2. M2MTokenResponse (accessToken)        │
-        │ ◄──────────────────────────────────────── │
-        │                                           │
-        │  3. GlobalTaxRequest + accessToken        │
-        │ ────────────────────────────────────────► │
-        │                                           │
-        │  4. GlobalTaxResponse (globalTaxReportId) │
-        │ ◄──────────────────────────────────────── │
-        │                                           │
-        │  5. ReportStatus + accessToken            │
-        │ ────────────────────────────────────────► │
-        │                                           │
-        │  6. ReportStatusResponse                  │
-        │ ◄──────────────────────────────────────── │
-        │                                           │
-----
+image::../images/m2m-integration.png[align="center", alt="M2M integrációs folyamat"]
 
 include::auth_hu.adoc[leveloffset=+1]
 include::dac9/globaltax_hu.adoc[leveloffset=+1]

@@ -7,7 +7,6 @@ A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beá
 
 * *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/dac9/globaltax/report`
 * *HTTP metódus:* POST
-* TLS 1.3 vagy újabb verzió használata kötelező
 * *Fejlécek:*
 ** `Authorization: Bearer {access_token}`
 ** `Content-Type: multipart/form-data`
