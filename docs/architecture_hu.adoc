@@ -1,3 +1,5 @@
+ifndef::imagesdir[:imagesdir: ./images]
+
 = Architektúra
 :toc: left
 :toclevels: 3
@@ -64,7 +66,7 @@ Jakarta EE DTO osztályok, amelyek az `schema-dac9` XSD sémáiból generálódn
 
 == Függőségi diagram
 
-image::images/DCC-API-architecture.drawio.png[align="center", alt="DCC API modul függőségi diagram"]
+image::DCC-API-architecture.drawio.png[align="center", alt="DCC API modul függőségi diagram"]
 
 == Névtér stratégia
 

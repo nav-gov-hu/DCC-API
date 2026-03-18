@@ -1,3 +1,5 @@
+ifndef::imagesdir[:imagesdir: ./../images]
+
 = Autentikáció - Token igénylés
 
 Az M2M kommunikáció első lépése a hozzáférési token igénylése a Token API-n keresztül.

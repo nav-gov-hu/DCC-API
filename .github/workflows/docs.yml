@@ -1,0 +1,18 @@
+name: Generate and publish documentation
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+      - 'feature/**'
+  pull_request:
+    branches-ignore:
+      - 'gh-pages'
+      - 'dependabot/**'
+
+jobs:
+  generate-and-publish-docs:
+    uses: nav-gov-hu/.github/.github/workflows/WF-mvn-docs.yml@release/0.2.x
+    with:
+    #   runs-on-os: 'ubuntu-latest'
+      java-version: '17'

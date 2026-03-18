@@ -1,3 +1,5 @@
+ifndef::imagesdir[:imagesdir: ./../images]
+
 = M2M integrációs útmutató
 :toc: left
 :toclevels: 3
@@ -32,7 +34,7 @@ azonban opcionálisan a következő időszinkronizáció lehetséges: http://www
 
 == Integrációs folyamat áttekintése
 
-image::../images/m2m-integration.png[align="center", alt="M2M integrációs folyamat"]
+image::m2m-integration.png[align="center", alt="M2M integrációs folyamat"]
 
 include::auth_hu.adoc[leveloffset=+1]
 include::dac9/globaltax_hu.adoc[leveloffset=+1]
@@ -52,7 +54,7 @@ a kérés-válasz objektumok közvetlenül Java-ból is kezelhetők.
         <dependency>
             <groupId>hu.gov.nav.dcc.api</groupId>
             <artifactId>bom-project</artifactId>
-            <version>VERSION</version>
+            <version>{release_version}</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>

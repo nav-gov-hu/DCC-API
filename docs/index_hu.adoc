@@ -1,3 +1,5 @@
+ifndef::imagesdir[:imagesdir: ./images]
+
 = NAV DCC API
 :toc: left
 :toclevels: 3
