@@ -30,10 +30,10 @@ hitelesítési fejlécet, felhasználói adatokat és szoftver azonosítót.
     </context>
     <ns2:auth>
         <ns2:login>m2m_user_example</ns2:login> <1>
-        <ns2:passwordHash cryptoType="SHA-512">5E884898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D1542D8</ns2:passwordHash> <2>
+        <ns2:passwordHash cryptoType="SHA-512">12B03226A6D8BE9C6E8CD5E55DC6C7920CAAA39DF14AAB92D5E3EA9340D1C8A4D3D0B8E4314F1F6EF131BA4BF1CEB9186AB87C801AF0D5C95B1BEFB8CEDAE2B9</ns2:passwordHash> <2>
         <ns2:taxNumber>12345678</ns2:taxNumber> <3>
         <ns2:predecessorTaxNumber></ns2:predecessorTaxNumber> <4>
-        <ns2:requestSignature cryptoType="SHA3-512">12345898DA28047151D0E56F8DC6292773603D0D6AABBDD62A11EF721D185255</ns2:requestSignature> <5>
+        <ns2:requestSignature cryptoType="SHA3-512">6498E406186580DA6403680FD3A6A008FD7F207CA2AFDE5885C38AC700A9A52A3BAADEE914FA0649DBBE103D2D6E99B1236DA403CDD5EF338245A4474770D591</ns2:requestSignature> <5>
     </ns2:auth>
     <ns2:requestVersion>1.0</ns2:requestVersion> <6>
     <ns2:headerVersion>1.0</ns2:headerVersion> <7>
