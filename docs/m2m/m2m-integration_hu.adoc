@@ -47,7 +47,7 @@ a kérés-válasz objektumok közvetlenül Java-ból is kezelhetők.
 
 === Maven függőségek
 
-[source,xml]
+[source,xml,subs="attributes+"]
 ----
 <dependencyManagement>
     <dependencies>
