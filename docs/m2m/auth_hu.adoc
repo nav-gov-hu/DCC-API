@@ -10,6 +10,7 @@ A hozzáférési token igénylése HTTP POST kéréssel történik, ahol a köve
 * *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/token`
 * *HTTP metódus:* POST
 * *Fejlécek:*
+** `Content-Type: text/xml vagy application/xml`
 ** `Accept: text/xml vagy application/xml`
 
 == Kérés: M2MTokenRequest

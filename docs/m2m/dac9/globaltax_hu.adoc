@@ -12,10 +12,10 @@ A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beá
 * *Fejlécek:*
 ** `Authorization: Bearer {access_token}`
 ** `Content-Type: multipart/form-data`
+** `Accept: text/xml vagy application/xml`
 * *Törzs:* Két részből álló multipart/form-data:
 ** `metadata` - A `GlobalTaxRequest` XML reprezentációja
 *** `Content-Type: application/xml`
-** `Accept: text/xml vagy application/xml`
 ** `report` - A jelentés fájlja (https://www.oecd.org/en/publications/globe-information-return-pillar-two-status-message-xml-schema_449e3cc3-en.html[GloBE Information Return (Pillar Two) Status Message XML Schema]).
 *** `Content-Type: application/octet-stream`
 *** Ha a fájl nem tömörített, akkor plaintext XML-ben kell küldeni
@@ -28,14 +28,14 @@ A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beá
 [source,xml]
 ----
 <ns2:GlobalTaxRequest xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
-    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi" xmlns:ns3="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice">
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
     <context>
         <requestId>019ce6cd-394b-7622-9c01-6880b92f086d</requestId>
         <timestamp>2026-03-13T10:45:35.180339322Z</timestamp>
     </context>
     <ns2:compressedContent>false</ns2:compressedContent>
     <ns2:reportType>GLOBE_OECD_V1</ns2:reportType>
-    <ns2:reportChecksum cryptoType="CRC32">1234567890</ns2:reportChecksum>
+    <ns2:reportChecksum cryptoType="CRC32">639479525</ns2:reportChecksum>
 </ns2:GlobalTaxRequest>
 ----
 
@@ -64,7 +64,7 @@ A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beá
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <ns2:GlobalTaxResponse xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
-    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi" xmlns:ns3="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice">
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
     <context>
         <requestId>019ce6cd-394b-7622-9c01-6880b92f086d</requestId>
         <timestamp>2026-03-13T10:45:35.180339322Z</timestamp>

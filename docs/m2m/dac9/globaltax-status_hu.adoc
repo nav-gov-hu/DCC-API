@@ -19,7 +19,7 @@ A jelentés állapotának lekérdezése HTTP GET kéréssel történik, ahol a k
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <ns2:ReportStatusResponse xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
-    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi" xmlns:ns3="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice">
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
     <context>
         <requestId>019cf6ac-b11c-74b6-8b8c-0832f6805328</requestId>
         <timestamp>2026-03-16T12:43:58.620345274Z</timestamp>
@@ -55,7 +55,7 @@ A jelentés állapotának lekérdezése HTTP GET kéréssel történik, ahol a k
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <ns2:ReportStatusResponse xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
-    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi" xmlns:ns3="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice">
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
     <context>
         <requestId>019cf6ac-b11c-74b6-8b8c-0832f6805328</requestId>
         <timestamp>2026-03-16T12:43:58.620345274Z</timestamp>
