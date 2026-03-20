@@ -16,6 +16,7 @@
     <modules>
         <module>schema-auth</module>
         <module>schema-dac9</module>
+        <module>schema-oecd-globe</module>
     </modules>
 
 </project>
