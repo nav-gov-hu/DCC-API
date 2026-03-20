@@ -25,12 +25,15 @@ DCC-API
 │   └── bom-project/           # Csak projekt modulok BOM-ja
 ├── schema/
 │   ├── schema-auth/           # M2M Token API séma
-│   └── schema-dac9/           # DAC9 Global Tax API séma
+│   ├── schema-dac9/           # DAC9 Global Tax API séma
+│   └── schema-oecd-globe/     # OECD GLOBE Pillar Two harmadik féltől származó sémák
 ├── dto/
 │   ├── dto-auth/
 │   │   └── dto-auth-jakarta/  # Generált Jakarta EE DTO-k schema-auth sémából
-│   └── dto-dac9/
-│       └── dto-dac9-jakarta/  # Generált Jakarta EE DTO-k schema-dac9 sémából
+│   ├── dto-dac9/
+│   │   └── dto-dac9-jakarta/  # Generált Jakarta EE DTO-k schema-dac9 sémából
+│   └── dto-oecd-globe/
+│       └── dto-oecd-globe-jakarta/  # Generált Jakarta EE DTO-k OECD GLOBE sémából
 └── docs/                      # Dokumentáció
 ----
 
@@ -45,6 +48,12 @@ Az M2M autentikációs token API XSD sémáját tartalmazza.
 ==== schema-dac9
 
 A DAC-9 szolgáltatások API XSD sémáját tartalmazza.
+
+==== schema-oecd-globe
+
+Az OECD GLOBE (Global Anti-Base Erosion) Pillar Two Information Return XML sémáit tartalmazza.
+Ezek harmadik féltől származó, az https://www.oecd.org/en/publications/globe-information-return-pillar-two-xml-schema_c594935a-en/support-materials.html[OECD] által publikált XSD definíciók,
+amelyek a DAC9 globális minimumadó jelentés tartalmi validációjának alapjául szolgálnak.
 
 === DTO modulok
 
@@ -63,6 +72,15 @@ Jakarta EE DTO osztályok, amelyek az `schema-dac9` XSD sémáiból generálódn
 * *Függőségek:*
 ** `hu.gov.nav.schemas.common2:dto-jakarta` - Közös NTCA 2.0 DTO-k
 ** `hu.gov.nav.dcc.api:schema-dac9` - DAC9 séma definíciók
+
+==== dto-oecd-globe-jakarta
+
+Jakarta EE DTO osztályok, amelyek az `schema-oecd-globe` OECD GLOBE XSD sémáiból generálódnak JAXB segítségével.
+Ez a modul önálló, nem használ Episode mechanizmust, mivel az OECD típusok teljesen függetlenek az NTCA Common típusoktól.
+
+* *Függőségek:*
+** `hu.gov.nav.schemas.common2:core-jakarta` - Közös NTCA 2.0 core modul
+** `hu.gov.nav.dcc.api:schema-oecd-globe` - OECD GLOBE séma definíciók
 
 == Függőségi diagram
 
@@ -84,6 +102,15 @@ A projekt az alábbi névtér hierarchiát alkalmazza:
 
 | `+http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/*+`
 | DCC M2M DAC9 sémák
+
+| `+urn:oecd:ties:globe:v2+`
+| OECD GLOBE Information Return fő séma
+
+| `+urn:oecd:ties:isoglobetypes:v1+`
+| OECD ISO ország-, pénznem- és nyelvkód típusok
+
+| `+urn:oecd:ties:globestf:v5+`
+| OECD újrafelhasználható típusok
 |===
 
 A névterek a `schemas.nav.gov.hu` alatt szerveződnek, a `DCC/1.0` verziónévvel, az `m2m` prefix pedig

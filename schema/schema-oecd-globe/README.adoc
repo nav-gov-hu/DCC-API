@@ -1,0 +1,4 @@
+= OECD GLOBE Information Return Pillar Two XML Schema
+
+Original source:
+https://www.oecd.org/en/publications/globe-information-return-pillar-two-xml-schema_c594935a-en/support-materials.html

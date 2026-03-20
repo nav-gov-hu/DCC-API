@@ -27,12 +27,23 @@
             </dependency>
             <dependency>
                 <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>schema-oecd-globe</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
                 <artifactId>dto-auth-jakarta</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>hu.gov.nav.dcc.api</groupId>
                 <artifactId>dto-dac9-jakarta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>dto-oecd-globe-jakarta</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

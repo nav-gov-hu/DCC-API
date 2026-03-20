@@ -33,12 +33,15 @@ DCC-API
 │   └── bom-project  # BOM for project internal modules
 ├── schema
 │   ├── schema-auth  # Authentication XSD schemas (token API)
-│   └── schema-dac9  # DAC9 data exchange XSD schemas (globaltax API)
+│   ├── schema-dac9  # DAC9 data exchange XSD schemas (globaltax API)
+│   └── schema-oecd-globe  # OECD GLOBE Pillar Two XSD schemas (third-party)
 └── dto
     ├── dto-auth
     │   └── dto-auth-jakarta  # Jakarta EE generated DTOs from auth schema
-    └── dto-dac9
-        └── dto-dac9-jakarta  # Jakarta EE generated DTOs from dac9 schema
+    ├── dto-dac9
+    │   └── dto-dac9-jakarta  # Jakarta EE generated DTOs from dac9 schema
+    └── dto-oecd-globe
+        └── dto-oecd-globe-jakarta  # Jakarta EE generated DTOs from OECD GLOBE schema
 ----
 
 == 2) Usage
@@ -106,3 +109,25 @@ For a typical DAC9 data exchange client project, the following steps are needed:
 ----
 
 The `dto-auth-jakarta` and `dto-dac9-jakarta` artifacts transitively pull in the corresponding `schema-auth` / `schema-dac9` and the shared `hu.gov.nav.schemas.common2:dto-jakarta` dependency, so there is no need to add them separately.
+
+=== 2.4) Using OECD GLOBE schemas
+
+The OECD GLOBE Pillar Two schemas and the DTOs generated from them are available as separate modules:
+
+.XSD schemas only
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>schema-oecd-globe</artifactId>
+</dependency>
+----
+
+.XSD schemas + generated DTO objects (Jakarta EE)
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>dto-oecd-globe-jakarta</artifactId>
+</dependency>
+----

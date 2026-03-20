@@ -33,12 +33,15 @@ DCC-API
 │   └── bom-project  # Projekt belső moduljainak BOM-ja
 ├── schema
 │   ├── schema-auth  # Autentikációs XSD sémák (token API)
-│   └── schema-dac9  # DAC9 adatcsere XSD sémák (globaltax API)
+│   ├── schema-dac9  # DAC9 adatcsere XSD sémák (globaltax API)
+│   └── schema-oecd-globe  # OECD GLOBE Pillar Two XSD sémák (harmadik fél)
 └── dto
     ├── dto-auth
     │   └── dto-auth-jakarta  # Jakarta EE generált DTO-k az auth sémából
-    └── dto-dac9
-        └── dto-dac9-jakarta  # Jakarta EE generált DTO-k a dac9 sémából
+    ├── dto-dac9
+    │   └── dto-dac9-jakarta  # Jakarta EE generált DTO-k a dac9 sémából
+    └── dto-oecd-globe
+        └── dto-oecd-globe-jakarta  # Jakarta EE generált DTO-k az OECD GLOBE sémából
 ----
 
 == 2) Használat
@@ -106,3 +109,25 @@ Egy tipikus DAC9 adatcsere kliens projektben az alábbi lépések szükségesek:
 ----
 
 A `dto-auth-jakarta` és `dto-dac9-jakarta` tranzitívan behúzza a megfelelő `schema-auth` / `schema-dac9` és a közös `hu.gov.nav.schemas.common2:dto-jakarta` függőséget is, így külön nem szükséges azokat felvenni.
+
+=== 2.4) OECD GLOBE sémák használata
+
+Az OECD GLOBE Pillar Two sémák és a belőlük generált DTO-k külön modulként érhetők el:
+
+.Csak XSD sémák
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>schema-oecd-globe</artifactId>
+</dependency>
+----
+
+.XSD sémák + generált DTO objektumok (Jakarta EE)
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>dto-oecd-globe-jakarta</artifactId>
+</dependency>
+----

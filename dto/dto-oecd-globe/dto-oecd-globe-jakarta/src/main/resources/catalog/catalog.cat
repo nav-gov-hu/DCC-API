@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+    <public publicId="urn:oecd:ties:globe:v2"
+        uri="maven:hu.gov.nav.dcc.api:schema-oecd-globe:jar::!/xsd/urn/oecd/ties/globe/v2/GLOBEXML_v1.0.xsd" />
+    <public publicId="urn:oecd:ties:isoglobetypes:v1e"
+        uri="maven:hu.gov.nav.dcc.api:schema-oecd-globe:jar::!/xsd/urn/oecd/ties/globe/v2/isoglobetypes_v1.1.xsd" />
+    <public publicId="urn:oecd:ties:globestf:v5"
+        uri="maven:hu.gov.nav.dcc.api:schema-oecd-globe:jar::!/xsd/urn/oecd/ties/globe/v2/oecdglobetypes_v5.0.xsd" />
+
+</catalog>

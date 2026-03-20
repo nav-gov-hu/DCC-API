@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://catalog.schemas.nav.gov.hu/DCC/1.0/common/all-in-one"
+    targetNamespace="http://catalog.schemas.nav.gov.hu/DCC/1.0/common/all-in-one"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xsd:import namespace="urn:oecd:ties:globe:v2" />
+    <xsd:import namespace="urn:oecd:ties:isoglobetypes:v1" />
+    <xsd:import namespace="urn:oecd:ties:globestf:v5" />
+
+</xsd:schema>

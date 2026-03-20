@@ -16,7 +16,7 @@ A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beá
 * *Törzs:* Két részből álló multipart/form-data:
 ** `metadata` - A `GlobalTaxRequest` XML reprezentációja
 *** `Content-Type: application/xml`
-** `report` - A jelentés fájlja (https://www.oecd.org/en/publications/globe-information-return-pillar-two-status-message-xml-schema_449e3cc3-en.html[GloBE Information Return (Pillar Two) Status Message XML Schema]).
+** `report` - A jelentés fájlja (https://www.oecd.org/en/publications/globe-information-return-pillar-two-xml-schema_c594935a-en.html[GloBE Information Return (Pillar Two) XML Schema]).
 *** `Content-Type: application/octet-stream`
 *** Ha a fájl nem tömörített, akkor plaintext XML-ben kell küldeni
 *** Ha a fájl tömörített (gzip), akkor tömörítés nyers binary stream-ben kell küldeni.
