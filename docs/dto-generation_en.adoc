@@ -1,0 +1,240 @@
+ifndef::imagesdir[:imagesdir: ./images]
+
+= DTO generation
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+The DCC API project does not contain any hand-written Java source code.
+All Java classes (DTO – Data Transfer Object) are generated from XSD schemas
+at build time using the JAXB (Jakarta XML Binding) Maven plugin.
+
+The generation uses the following technologies:
+
+* *Jakarta EE JAXB 3.0* – XML-Java binding
+* *XSD Catalog* – Namespace resolution from Maven artifacts
+* *JAXB plugin extensions* – Fluent API and annotation handling
+* *Episode files* – Duplication-free generation of common types
+
+== DTO modules
+
+[cols="1,1,2"]
+|===
+| Module | ArtifactId | Description
+
+| Auth DTO
+| `dto-auth-jakarta`
+| Jakarta EE DTOs from the Token API (e.g. `tokenapi.xsd`) schema
+
+| DAC9 DTO
+| `dto-dac9-jakarta`
+| Jakarta EE DTOs from the Global Tax API (e.g. `globaltaxapi.xsd`) schema
+
+| OECD GLOBE DTO
+| `dto-oecd-globe-jakarta`
+| Jakarta EE DTOs from the OECD GLOBE Pillar Two schemas (e.g. `GLOBEXML_v1.0.xsd`)
+|===
+
+== Generation process
+
+Generation is performed using the `org.jvnet.jaxb:jaxb-maven-plugin:4.0.9` plugin,
+executing the `generate` goal in the Maven build `generate-sources` phase.
+
+=== Steps
+
+. The plugin reads the `all-in-one.xsd` aggregator schema
+. The OASIS XML Catalog (`catalog.cat`) resolves namespaces to the appropriate Maven artifacts
+. The JAXB binding file (`bindings.xjb`) is applied
+. Common types are sourced from Episode files (not regenerated)
+. Generated Java classes are placed in the `target/generated-sources/src/main/java` directory
+
+=== Generation configuration
+
+[source,xml]
+----
+<plugin>
+    <groupId>org.jvnet.jaxb</groupId>
+    <artifactId>jaxb-maven-plugin</artifactId>
+    <version>4.0.9</version>
+    <executions>
+        <execution>
+            <id>dcc-super</id>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <configuration>
+                <episodes>
+                    <episode>
+                        <groupId>hu.gov.nav.schemas.common2</groupId>
+                        <artifactId>dto-jakarta</artifactId>
+                    </episode>
+                </episodes>
+                <strict>false</strict>
+                <catalog>src/main/resources/catalog/catalog.cat</catalog>
+                <schemaIncludes>
+                    <include>catalog/all-in-one.xsd</include>
+                </schemaIncludes>
+                <bindingIncludes>
+                    <include>xjb/bindings.xjb</include>
+                </bindingIncludes>
+                <generateDirectory>
+                    ${project.build.directory}/generated-sources/src/main/java
+                </generateDirectory>
+            </configuration>
+        </execution>
+    </executions>
+    <configuration>
+        <verbose>true</verbose>
+        <schemaDirectory>src/main/resources</schemaDirectory>
+        <args>
+            <arguments>-Xfluent-api</arguments>
+            <arguments>-Xannotate</arguments>
+        </args>
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.jaxb2_commons</groupId>
+                <artifactId>jaxb2-fluent-api</artifactId>
+                <version>3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jvnet.jaxb</groupId>
+                <artifactId>jaxb-plugin-annotate</artifactId>
+                <version>4.0.8</version>
+            </plugin>
+        </plugins>
+    </configuration>
+</plugin>
+----
+
+== XSD Catalog system
+
+The XSD Catalog operates according to the OASIS XML Catalog standard.
+The `catalog.cat` files map namespaces to Maven artifacts,
+enabling modular use of schemas.
+
+=== Catalog entries (Example)
+
+[source,xml]
+----
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+    <!-- NTCA 2.0 common schemas (Common project) -->
+    <public publicId="http://schemas.nav.gov.hu/NTCA/2.0/common/string"
+        uri="maven:hu.gov.nav.schemas.common2:schemas:jar::!/xsd/.../string.xsd" />
+    <public publicId="http://schemas.nav.gov.hu/NTCA/2.0/common/type"
+        uri="maven:hu.gov.nav.schemas.common2:schemas:jar::!/xsd/.../type.xsd" />
+    <!-- ... additional NTCA namespaces ... -->
+
+    <!-- DCC Auth schema -->
+    <public publicId="http://schemas.nav.gov.hu/DCC/1.0/m2m/token/tokenapi"
+        uri="maven:hu.gov.nav.dcc.api:schema-auth:jar::!/xsd/.../tokenapi.xsd" />
+
+</catalog>
+----
+
+=== All-in-one aggregator schema
+
+The `all-in-one.xsd` is an aggregator schema that imports all required namespaces
+as a single entry point for the JAXB generator:
+
+[source,xml]
+----
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://catalog.schemas.nav.gov.hu/DCC/1.0/common/all-in-one">
+
+    <!-- NTCA 2.0 common namespaces -->
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/string" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/type" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/customer" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/paging" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/entity" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/service" />
+    <xsd:import namespace="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice" />
+
+    <!-- DCC module-specific schema -->
+    <xsd:import namespace="http://schemas.nav.gov.hu/DCC/1.0/m2m/token/tokenapi" />
+
+</xsd:schema>
+----
+
+== JAXB binding configuration
+
+The `bindings.xjb` file contains the following global settings:
+
+=== generateIsSetMethod
+
+[source,xml]
+----
+<jaxb:globalBindings generateIsSetMethod="true">
+----
+
+For optional fields, `isSet*()` methods are also generated, which can be used to check
+whether a given field has been set (with a value other than null).
+
+=== Date/time type mappings
+
+[cols="1,1,1"]
+|===
+| XSD type | Java type | Adapter class
+
+| `xsd:date`
+| `java.time.LocalDate`
+| `LocalDateXmlAdapter`
+
+| `xsd:time`
+| `java.time.OffsetTime`
+| `UtcOffsetTimeXmlAdapter`
+
+| `xsd:dateTime`
+| `java.time.OffsetDateTime`
+| `UtcOffsetDateTimeXmlAdapter`
+|===
+
+The adapter classes are located in the `hu.gov.nav.schemas.common2.core.adapter` package
+(in the Common project's `dto-jakarta` module).
+
+== Episode mechanism
+
+Episode files ensure that where types use common NTCA 2.0 types (e.g. `GenericIdType`, `BaseRequestType`),
+they are not regenerated in every DTO module. Instead, the plugin references the
+`hu.gov.nav.schemas.common2:dto-jakarta` artifact's Episode file, so only DCC-specific types are generated.
+
+For example, the `dto-oecd-globe-jakarta` module does not use the Episode mechanism,
+as the OECD GLOBE types are completely standalone and independent of the NTCA Common types.
+
+.Episode configuration
+[source,xml]
+----
+<episodes>
+    <episode>
+        <groupId>hu.gov.nav.schemas.common2</groupId>
+        <artifactId>dto-jakarta</artifactId>
+    </episode>
+</episodes>
+----
+
+== JAXB plugin extensions
+
+=== Fluent API (`-Xfluent-api`)
+
+The `jaxb2-fluent-api:3.0` extension generates fluent (chainable) setter methods:
+
+[source,java]
+----
+// Standard JAXB
+request.setCompressedContent(true);
+request.setReportType(ReportTypeType.GLOBE_OECD_V_1);
+
+// Fluent API
+request.withCompressedContent(true)
+       .withReportType(ReportTypeType.GLOBE_OECD_V_1);
+----
+
+=== Annotate (`-Xannotate`)
+
+The `jaxb-plugin-annotate:4.0.8` extension allows adding custom annotations
+to generated classes through the binding file.

@@ -2,6 +2,9 @@
 
 link:README.adoc[Hungarian version]
 
+https://nav-gov-hu.github.io/DCC-API/[Teljes dokumentáció [HU\]]
+| https://nav-gov-hu.github.io/DCC-API/index_en.html[Full documentation [EN\]]
+
 Welcome to the public repository of the DCC API!
 
 == 1) Repository contents and purpose

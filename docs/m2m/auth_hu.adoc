@@ -120,8 +120,8 @@ Sikeres hitelesítés esetén a válasz tartalmazza a hozzáférési tokent és 
 | `GenericIdType`
 
 | `accessTokenExpiryAt`
-| A token lejárati időpontja (UTC, ezredmásodperc pontossággal)
-| `GenericTimestampMilliType`
+| A token lejárati időpontja (UTC, nanomásodperc pontossággal)
+| `GenericTimestampNanoType`
 |===
 
 IMPORTANT: A tokent a lejárati időpont előtt kell megújítani.
