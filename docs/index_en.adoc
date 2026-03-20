@@ -8,6 +8,8 @@ ifndef::imagesdir[:imagesdir: ./images]
 :source-highlighter: highlight.js
 :nofooter:
 
+link:index_hu.html[Magyar verzió]
+
 == Introduction
 
 The *DCC API* (Directive on Administrative Cooperation API) project contains the public schema definitions

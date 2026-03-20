@@ -8,6 +8,8 @@ ifndef::imagesdir[:imagesdir: ./images]
 :source-highlighter: highlight.js
 :nofooter:
 
+link:index_en.html[English version]
+
 == Bevezetés
 
 A *DCC API* (Directive on Administrative Cooperation API) projekt a 2011/16/EU irányelv (DAC) szerinti
