@@ -18,6 +18,8 @@ amely összefogja és támogatja az EU DAC irányelv által előírt valamennyi 
 A rendszer megteremti az interoperabilitás, az átláthatóság és az adatbiztonság egységes alapjait,
 elősegítve az adóügyi együttműködés magasabb szintjét az Európai Unióban.
 
+include::dac9/dac9_hu.adoc[leveloffset=+2]
+
 == Dokumentáció áttekintése
 
 Az alábbi dokumentumok alkotják a DCC API fejlesztési dokumentációját:

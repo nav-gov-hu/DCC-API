@@ -1,0 +1,17 @@
+ifndef::imagesdir[:imagesdir: ./images]
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+= DAC9 - GloBE Information Return (Pillar Two)
+
+DAC9 is one of the most important tax data exchange services under Directive 2011/16/EU (DAC),
+providing XML schemas for reporting the global minimum tax.
+The DCC-API DAC9 modules contain the implementation of the GloBE Information Return (Pillar Two) XML schemas, developed by Hungary in cooperation with the OECD, based on the following documents:
+
+. OECD (2025), GloBE Information Return (Pillar Two) XML Schema: User Guide for Tax Administrations, OECD Publishing, Paris, https://doi.org/10.1787/c594935a-en.
+. OECD (2025), Tax Challenges Arising from the Digitalisation of the Economy - Consolidated Commentary to the Global Anti-Base Erosion Model Rules (2025): Inclusive Framework on BEPS, OECD/G20 Base Erosion and Profit Shifting Project, OECD Publishing, Paris, https://doi.org/10.1787/a551b351-en.
+. OECD (2025), Tax Challenges Arising from the Digitalisation of the Economy - GloBE Information Return (January 2025): Inclusive Framework on BEPS, OECD/G20 Base Erosion and Profit Shifting Project, OECD Publishing, Paris, https://doi.org/10.1787/a05ec99a-en.

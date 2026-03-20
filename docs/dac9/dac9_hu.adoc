@@ -1,0 +1,17 @@
+ifndef::imagesdir[:imagesdir: ./../images]
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+= DAC9 - GloBE Információs Adatszolgáltatás (Pillar Two)
+
+A DAC9 a 2011/16/EU irányelv (DAC) szerinti adóügyi adatcsere egyik legfontosabb szolgáltatása,
+amely a globális minimumadó jelentésére vonatkozó XML sémákat tartalmazza.
+A DCC-API DAC9 moduljai a Magyarország által az OECD-vel együttműködésben implementált GloBE Information Return (Pillar Two) XML sémák implementációját tartalmazzák, amelyek a következő dokumentumokon alapulnak:
+
+. OECD (2025), GloBE Információs Adatszolgáltatás (Pillar Two) XML séma: Felhasználói útmutató adóhatóságok számára, OECD Publishing, Párizs, https://doi.org/10.1787/c594935a-en.
+. OECD (2025), Az adózás digitalizációjából eredő kihívások - Konszolidált kommentár a Globális Anti-Base Erosion Modell Szabályokhoz (2025): Befogadó Keret a BEPS-re, OECD/G20 Base Erosion and Profit Shifting Project, OECD Publishing, Párizs, https://doi.org/10.1787/a551b351-en.
+. OECD (2025), Az adózás digitalizációjából eredő kihívások - GloBE Információs Adatszolgáltatás (2025. január): Befogadó Keret a BEPS-re, OECD/G20 Base Erosion and Profit Shifting Project, OECD Publishing, Párizs, https://doi.org/10.1787/a05ec99a-en.
