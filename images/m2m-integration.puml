@@ -1,0 +1,32 @@
+@startuml
+skinparam participant {
+    BackgroundColor<<client>> #DDEEFF
+    BorderColor<<client>> #3366AA
+    FontColor<<client>> #003388
+    BackgroundColor<<server>> #E8F5E9
+    BorderColor<<server>> #2E7D32
+    FontColor<<server>> #1B5E20
+}
+skinparam sequence {
+    ArrowColor #455A64
+    LifeLineBorderColor #90A4AE
+    LifeLineBackgroundColor #ECEFF1
+    MessageAlign center
+}
+skinparam note {
+    BackgroundColor #FFF9C4
+    BorderColor #F9A825
+}
+
+participant "Client\n(M2M partner)" as Client <<client>>
+participant "NAV DCC API\nServer" as Server <<server>>
+
+Client -[#3366AA]-> Server : 1. M2MTokenRequest
+Server -[#2E7D32]-> Client : 2. M2MTokenResponse (accessToken)
+
+Client -[#3366AA]-> Server : 3. GlobalTaxRequest + accessToken
+Server -[#2E7D32]-> Client : 4. GlobalTaxResponse (globalTaxReportId)
+
+Client -[#3366AA]-> Server : 5. ReportStatus + accessToken
+Server -[#2E7D32]-> Client : 6. ReportStatusResponse
+@enduml
