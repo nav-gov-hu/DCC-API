@@ -18,7 +18,7 @@ külső kliensek számára. A DCC API következő M2M funkciókat biztosít:
 
 * *TLS 1.3* vagy újabb verzió használata kötelező
 * Request/Response *XML formátum*, ha csak az adott végpont nem ír elő más formátumot.
-* Karaketer kódolás *UTF-8* minden esetben.
+* Karakterkódolás *UTF-8* minden esetben.
 * Befogadott request méret maximálisan 1 MB, ha csak az adott végpont nem ír elő más méretkorlátot.
 * Tömörítés *GZIP* formátumban. Ha valahol tömörített adatot kell küldeni, akkor tömörítéskor a leggyorsabb, legkevésbé tömörítő, 1-es compression ratio kerüljön alkalmazásra („gzip -1 [FILE]”).
 * A szerver jellemzően *300ms alatti* válaszidőkkel szolgál ki.
