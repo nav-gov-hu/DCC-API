@@ -1,0 +1,85 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC9 GlobalTaxRequest jelentés beküldés
+
+A hozzáférési token birtokában a DAC-9 globális minimumadó jelentés küldhető be.
+
+== Http kérés
+A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beállítások szükségesek:
+
+* *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/dac9/globaltax/report`
+* *HTTP metódus:* POST
+* *Fejlécek:*
+** `Authorization: Bearer {access_token}`
+** `Content-Type: multipart/form-data`
+** `Accept: text/xml vagy application/xml`
+* *Törzs:* Két részből álló multipart/form-data:
+** `metadata` - A `GlobalTaxRequest` XML reprezentációja
+*** `Content-Type: application/xml`
+** `report` - A jelentés fájlja (https://www.oecd.org/en/publications/globe-information-return-pillar-two-status-message-xml-schema_449e3cc3-en.html[GloBE Information Return (Pillar Two) Status Message XML Schema]).
+*** `Content-Type: application/octet-stream`
+*** Ha a fájl nem tömörített, akkor plaintext XML-ben kell küldeni
+*** Ha a fájl tömörített (gzip), akkor tömörítés nyers binary stream-ben kell küldeni.
+** Minden esetben a karakter kódolás UTF-8
+** Beküldéskor a fájl tartalmának CRC32 ellenőrző összegét is meg kell adni a `reportChecksum` mezőben. Ha a fájl tömörített, akkor a kitömörített tartalom CRC32 értékét kell megadni.
+
+== Kérés: GlobalTaxRequest
+
+[source,xml]
+----
+<ns2:GlobalTaxRequest xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
+    <context>
+        <requestId>019ce6cd-394b-7622-9c01-6880b92f086d</requestId>
+        <timestamp>2026-03-13T10:45:35.180339322Z</timestamp>
+    </context>
+    <ns2:compressedContent>false</ns2:compressedContent>
+    <ns2:reportType>GLOBE_OECD_V1</ns2:reportType>
+    <ns2:reportChecksum cryptoType="CRC32">639479525</ns2:reportChecksum>
+</ns2:GlobalTaxRequest>
+----
+
+.Kérés mezők
+[cols="1,3,1"]
+|===
+| Mező | Leírás | Kötelező
+
+| `compressedContent`
+| `true` ha a beküldött tartalom tömörített, `false` egyébként
+| Igen
+
+| `reportType`
+| A jelentés típusa. Jelenleg az egyetlen megengedett érték: `GLOBE_OECD_V1`
+| Igen
+
+| `reportChecksum`
+| A jelentés ellenőrző összege (`CryptoType`). Tömörített tartalom esetén
+  a *kitömörített* tartalom ellenőrző összegét kell megadni.
+| Igen
+|===
+
+== Válasz: GlobalTaxResponse
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:GlobalTaxResponse xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
+    <context>
+        <requestId>019ce6cd-394b-7622-9c01-6880b92f086d</requestId>
+        <timestamp>2026-03-13T10:45:35.180339322Z</timestamp>
+    </context>
+    <resultCode>SUCCESS</resultCode>
+    <ns2:globalTaxReportId>019ce6cd-4540-78a7-ac4f-5049465a1fa0</ns2:globalTaxReportId>
+</ns2:GlobalTaxResponse>
+----
+
+.Válasz mezők
+[cols="1,3"]
+|===
+| Mező | Leírás
+
+| `globalTaxReportId`
+| A beküldött jelentés egyedi tranzakció azonosítója.
+  Ez az azonosító szükséges a jelentés állapotának lekérdezéséhez.
+|===

@@ -1,0 +1,49 @@
+ifndef::imagesdir[:imagesdir: ./images]
+
+= NAV DCC API
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+== Bevezetés
+
+A *DCC API* (Directive on Administrative Cooperation API) projekt a 2011/16/EU irányelv (DAC) szerinti
+adóügyi adatcsere M2M (Machine-to-Machine) interfészének nyilvános sémadefinícióit tartalmazza.
+
+A projekt célja egy egységes, biztonságos és hatékony elektronikus adatcsere-keretrendszer biztosítása,
+amely összefogja és támogatja az EU DAC irányelv által előírt valamennyi adatcsere-folyamatot.
+A rendszer megteremti az interoperabilitás, az átláthatóság és az adatbiztonság egységes alapjait,
+elősegítve az adóügyi együttműködés magasabb szintjét az Európai Unióban.
+
+== Dokumentáció áttekintése
+
+Az alábbi dokumentumok alkotják a DCC API fejlesztési dokumentációját:
+
+[cols="1,3"]
+|===
+| Dokumentum | Leírás
+
+| link:architecture_hu.html[Architektúra]
+| A projekt felépítése, modul struktúra, függőségi hierarchia és tervezési döntések.
+
+| link:m2m/m2m-integration_hu.html[M2M integrációs útmutató]
+| Gépi interfész csatlakozási útmutató külső kliensek számára.
+
+| link:dto-generation_hu.html[DTO generálás]
+| Jakarta EE DTO objektumok generálásának módja, JAXB konfiguráció és Catalog rendszer.
+|===
+
+== Külső függőségek
+
+A projekt a NAV közös sémaleíró projektjére épül:
+
+* https://github.com/nav-gov-hu/Common[*Common*] (`hu.gov.nav.schemas.common2`) - Általános NTCA 2.0 XSD definíciók és Jakarta EE DTO-k.
+  A DCC API sémái és típusai erre a projektre épülnek, felhasználva annak
+  string, type, customer, paging, entity, service és authservice névtereit.
+
+include::architecture_hu.adoc[leveloffset=+1]
+include::m2m/m2m-integration_hu.adoc[leveloffset=+1]
+include::dto-generation_hu.adoc[leveloffset=+1]

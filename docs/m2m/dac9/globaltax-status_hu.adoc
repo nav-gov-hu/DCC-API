@@ -1,0 +1,78 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= Jelentés állapot lekérdezés
+
+A beküldött jelentés technikai feldolgozási állapota lekérdezhető a tranzakció azonosító alapján.
+
+== Http kérés
+A jelentés állapotának lekérdezése HTTP GET kéréssel történik, ahol a következő beállítások szükségesek:
+
+* *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/dac9/globaltax/report/{globalTaxReportId}/status`
+* *HTTP metódus:* GET
+* *Fejlécek:*
+** `Authorization: Bearer {access_token}`
+** `Accept: text/xml vagy application/xml`
+
+== Válasz: ReportStatusResponse
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:ReportStatusResponse xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
+    <context>
+        <requestId>019cf6ac-b11c-74b6-8b8c-0832f6805328</requestId>
+        <timestamp>2026-03-16T12:43:58.620345274Z</timestamp>
+    </context>
+    <resultCode>SUCCESS</resultCode>
+    <ns2:reportStatus>
+        <ns2:status>VALID</ns2:status>
+    </ns2:reportStatus>
+</ns2:ReportStatusResponse>
+----
+
+.Lehetséges státuszok és teendők
+[cols="1,3"]
+|===
+| Státusz | Teendő
+
+| `UPLOADED`
+| A jelentés feltöltve. Várjon, majd kérdezze le újra az állapotot.
+
+| `VALIDATING`
+| A jelentés ellenőrzés alatt. Várjon, majd kérdezze le újra az állapotot.
+
+| `VALID`
+| A jelentés érvényes, technikailag sikeresen feldolgozva. Nincs további teendő.
+
+| `INVALID`
+| A jelentés érvénytelen. Ellenőrizze az `errorCode` és `anomaly` mezőket
+  a hiba okának feltárásához, majd javítsa és küldje be újra a jelentést.
+|===
+
+.Példa: Érvénytelen jelentés válasz
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:ReportStatusResponse xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service"
+    xmlns:ns2="http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/globaltax/globaltaxapi">
+    <context>
+        <requestId>019cf6ac-b11c-74b6-8b8c-0832f6805328</requestId>
+        <timestamp>2026-03-16T12:43:58.620345274Z</timestamp>
+    </context>
+    <resultCode>SUCCESS</resultCode>
+    <ns2:reportStatus>
+        <ns2:status>INVALID</ns2:status>
+        <ns2:errorCode>INVALID_FILE</ns2:errorCode>
+        <ns2:anomaly>
+            <field>exampleField</field>
+            <error>Invalid value in column 12, line 34</error>
+            <lineNumber>34</lineNumber>
+            <columnNumber>12</columnNumber>
+        </ns2:anomaly>
+        <ns2:anomaly>
+            <error>Another error without line and column information</error>
+        </ns2:anomaly>
+    </ns2:reportStatus>
+</ns2:ReportStatusResponse>
+----
