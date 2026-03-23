@@ -9,7 +9,7 @@
 
     <groupId>hu.gov.nav.dcc.api</groupId>
     <artifactId>dcc-api</artifactId>
-    <version>1.0.0-rc.1-SNAPSHOT</version>
+    <version>1.0.0-rc.1</version>
 
     <packaging>pom</packaging>
 
@@ -31,7 +31,8 @@
         <connection>scm:git:git@github.com:nav-gov-hu/DCC-API.git</connection>
         <developerConnection>scm:git:git@github.com:nav-gov-hu/DCC-API.git</developerConnection>
         <url>https://github.com/nav-gov-hu/DCC-API</url>
-    </scm>
+      <tag>dcc-api-1.0.0-rc.1</tag>
+  </scm>
 
     <issueManagement>
         <system>github issues</system>
