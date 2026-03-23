@@ -8,6 +8,8 @@ ifndef::imagesdir[:imagesdir: ./images]
 :source-highlighter: highlight.js
 :nofooter:
 
+link:index_en.html[English version]
+
 == Bevezetés
 
 A *DCC API* (Directive on Administrative Cooperation API) projekt a 2011/16/EU irányelv (DAC) szerinti
@@ -17,6 +19,8 @@ A projekt célja egy egységes, biztonságos és hatékony elektronikus adatcser
 amely összefogja és támogatja az EU DAC irányelv által előírt valamennyi adatcsere-folyamatot.
 A rendszer megteremti az interoperabilitás, az átláthatóság és az adatbiztonság egységes alapjait,
 elősegítve az adóügyi együttműködés magasabb szintjét az Európai Unióban.
+
+include::dac9/dac9_hu.adoc[leveloffset=+2]
 
 == Dokumentáció áttekintése
 

@@ -1,0 +1,114 @@
+ifndef::imagesdir[:imagesdir: ./../images]
+
+= M2M integration guide
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+This chapter contains the connection guide for the M2M (Machine-to-Machine) machine interface
+for external clients. The DCC API provides the following M2M functions:
+
+. *Authentication* - Token request for M2M communication
+. *DAC9 report submission* - Global minimum tax report management
+
+General HTTP communication rules:
+
+* *TLS 1.3* or later version is mandatory
+* Request/Response in *XML format*, unless the specific endpoint requires a different format.
+* Character encoding is *UTF-8* in all cases.
+* Maximum accepted request size is 1 MB, unless the specific endpoint specifies a different size limit.
+* Compression in *GZIP* format. When compressed data needs to be sent, the fastest, least compressing, level 1 compression ratio should be applied ("gzip -1 [FILE]").
+* The server typically responds with *sub-300ms* response times.
+* The blocking timeout for synchronous calls is 5000 ms.
+Please handle response times exceeding the above value as timeouts on the client side!
+The absolute timeout value is 60 sec.
+If no response is received for a submission due to the 60-second timeout, it does not necessarily mean the submission failed.
+* The server receives time settings from a closed NTP server not accessible to the outside world.
+Client-side synchronization to the server time is not required,
+but optionally the following time synchronization is available: http://www.pool.ntp.org/zone/hu (NTP client required for connection).
+* Clients are expected to anticipate API version changes (with pre-announced, plannable times),
+and to consider the version number when processing requests and responses.
+
+== Integration process overview
+
+image::m2m-integration.png[align="center", alt="M2M integration process"]
+
+include::auth_en.adoc[leveloffset=+1]
+include::dac9/globaltax_en.adoc[leveloffset=+1]
+include::dac9/globaltax-status_en.adoc[leveloffset=+1]
+
+== Java client example
+
+Using the `dto-auth-jakarta` and `dto-dac9-jakarta` Maven modules,
+request-response objects can be handled directly from Java.
+
+=== Maven dependencies
+
+[source,xml,subs="attributes+"]
+----
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>hu.gov.nav.dcc.api</groupId>
+            <artifactId>bom-project</artifactId>
+            <version>{release_version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+<dependencies>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-auth-jakarta</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-dac9-jakarta</artifactId>
+    </dependency>
+</dependencies>
+----
+
+=== Token request assembly
+
+[source,java]
+----
+import hu.gov.nav.schemas.dcc._1_0.m2m.token.tokenapi.M2MTokenRequest;
+import hu.gov.nav.schemas.dcc._1_0.m2m.token.tokenapi.M2MTokenResponseType;
+
+// Create token request (fluent API)
+M2MTokenRequest tokenRequest = new M2MTokenRequest();
+// ... set header, user, and software data
+
+// Process response
+M2MTokenResponseType response = // ... HTTP call result
+String accessToken = response.getAccessToken();
+OffsetDateTime expiryAt = response.getAccessTokenExpiryAt();
+----
+
+=== DAC9 report submission
+
+[source,java]
+----
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac9.globaltax.globaltaxapi.GlobalTaxRequest;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac9.globaltax.globaltaxapi.GlobalTaxResponseType;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac9.globaltax.globaltaxapi.ReportStatusResponseType;
+
+// Report registration request
+GlobalTaxRequest request = new GlobalTaxRequest();
+request.setCompressedContent(true);
+request.setReportType(ReportTypeType.GLOBE_OECD_V_1);
+// ... set checksum
+
+// Process response
+GlobalTaxResponseType taxResponse = // ... HTTP call result
+String reportId = taxResponse.getGlobalTaxReportId();
+
+// Status query
+ReportStatusResponseType statusResponse = // ... HTTP call result
+FileStatusType status = statusResponse.getReportStatus().getStatus();
+----
