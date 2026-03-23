@@ -7,7 +7,7 @@ The first step in M2M communication is requesting an access token through the To
 == HTTP request
 The access token is requested via an HTTP POST request with the following settings:
 
-* *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/token`
+* *URL:* `https://api-dacentral.nav.gov.hu/dcc/v1/m2m/token`
 * *HTTP method:* POST
 * *Headers:*
 ** `Content-Type: text/xml or application/xml`

@@ -7,7 +7,7 @@ With the access token in hand, the DAC-9 global minimum tax report can be submit
 == HTTP request
 The report is submitted via an HTTP POST request with the following settings:
 
-* *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/dac9/globaltax/report`
+* *URL:* `https://api-dacentral.nav.gov.hu/dcc/v1/m2m/dac9/globaltax/report`
 * *HTTP method:* POST
 * *Headers:*
 ** `Authorization: Bearer {access_token}`
