@@ -7,7 +7,7 @@ A hozzáférési token birtokában a DAC-9 globális minimumadó jelentés küld
 == Http kérés
 A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beállítások szükségesek:
 
-* *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/dac9/globaltax/report`
+* *URL:* `https://api-dacentral.nav.gov.hu/dcc/v1/m2m/dac9/globaltax/report`
 * *HTTP metódus:* POST
 * *Fejlécek:*
 ** `Authorization: Bearer {access_token}`

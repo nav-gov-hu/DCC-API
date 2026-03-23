@@ -7,7 +7,7 @@ Az M2M kommunikáció első lépése a hozzáférési token igénylése a Token 
 == Http kérés
 A hozzáférési token igénylése HTTP POST kéréssel történik, ahol a következő beállítások szükségesek:
 
-* *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/token`
+* *URL:* `https://api-dacentral.nav.gov.hu/dcc/v1/m2m/token`
 * *HTTP metódus:* POST
 * *Fejlécek:*
 ** `Content-Type: text/xml vagy application/xml`

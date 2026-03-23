@@ -7,7 +7,7 @@ A beküldött jelentés technikai feldolgozási állapota lekérdezhető a tranz
 == Http kérés
 A jelentés állapotának lekérdezése HTTP GET kéréssel történik, ahol a következő beállítások szükségesek:
 
-* *URL:* `https://api-dacentral.nav.gov.hu/dcc/m2m/dac9/globaltax/report/{globalTaxReportId}/status`
+* *URL:* `https://api-dacentral.nav.gov.hu/dcc/v1/m2m/dac9/globaltax/report/{globalTaxReportId}/status`
 * *HTTP metódus:* GET
 * *Fejlécek:*
 ** `Authorization: Bearer {access_token}`
