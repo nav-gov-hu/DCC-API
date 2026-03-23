@@ -12,6 +12,7 @@
     <artifactId>dto-oecd-globe</artifactId>
     <packaging>pom</packaging>
 
+    <name>dto-oecd-globe</name>
     <description>API DTO parent module for OECD GLOBE</description>
 
     <modules>

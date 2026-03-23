@@ -10,6 +10,9 @@
     <artifactId>bom-all</artifactId>
     <packaging>pom</packaging>
 
+    <name>bom-all</name>
+    <description>API BOM parent module for all DCC API modules</description>
+
     <properties>
         <version.hu.gov.nav.schemas.common2>2.0.0-rc.1</version.hu.gov.nav.schemas.common2>
     </properties>

@@ -10,6 +10,8 @@
     </parent>
 
     <artifactId>schema-oecd-globe</artifactId>
+
+    <name>schema-oecd-globe</name>
     <description>OECD GLOBE API schema definitions</description>
 
 </project>

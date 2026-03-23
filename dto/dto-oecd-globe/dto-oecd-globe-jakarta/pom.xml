@@ -10,6 +10,8 @@
     </parent>
 
     <artifactId>dto-oecd-globe-jakarta</artifactId>
+
+    <name>dto-oecd-globe-jakarta</name>
     <description>API DTO OECD GLOBE module for Jakarta EE</description>
 
     <dependencies>
