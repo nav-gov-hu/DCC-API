@@ -20,6 +20,7 @@ The report is submitted via an HTTP POST request with the following settings:
 *** `Content-Type: application/octet-stream`
 *** If the file is not compressed, it must be sent as plaintext XML
 *** If the file is compressed (gzip), the compressed raw binary stream must be sent.
+*** The maximum allowable file size is 100 MB (both compressed and uncompressed). If the file is compressed, the size of the decompressed content must not exceed 250 MB.
 ** Character encoding is UTF-8 in all cases
 ** When submitting, the CRC32 checksum of the file content must also be provided in the `reportChecksum` field. If the file is compressed, the CRC32 value of the decompressed content must be provided.
 
