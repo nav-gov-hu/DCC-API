@@ -20,6 +20,7 @@ A jelentés beküldése HTTP POST kéréssel történik, ahol a következő beá
 *** `Content-Type: application/octet-stream`
 *** Ha a fájl nem tömörített, akkor plaintext XML-ben kell küldeni
 *** Ha a fájl tömörített (gzip), akkor tömörítés nyers binary stream-ben kell küldeni.
+*** A befogadható fájl maximális mérete: 100 MB (tömörített és nem tömörített formában). Ha a fájl tömörített, akkor a kitömörített tartalom mérete nem haladhatja meg a 250 MB-ot.
 ** Minden esetben a karakter kódolás UTF-8
 ** Beküldéskor a fájl tartalmának CRC32 ellenőrző összegét is meg kell adni a `reportChecksum` mezőben. Ha a fájl tömörített, akkor a kitömörített tartalom CRC32 értékét kell megadni.
 

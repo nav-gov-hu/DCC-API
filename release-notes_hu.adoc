@@ -1,5 +1,9 @@
 = Verziótörténet
 
+== 1.0.0-rc.2
+
+* GlobalTaxRequest dokumentáció pontosítása
+
 == 1.0.0-rc.1
 
 * Projekt létrehozása

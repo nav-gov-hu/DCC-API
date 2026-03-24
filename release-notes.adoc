@@ -1,5 +1,9 @@
 = Release notes
 
+== 1.0.0-rc.2
+
+* GlobalTaxRequest documentation clarification
+
 == 1.0.0-rc.1
 
 * Project creation
