@@ -4,7 +4,7 @@
     <parent>
           <groupId>hu.gov.nav.dcc.api</groupId>
           <artifactId>schema</artifactId>
-          <version>1.0.0-rc.2-SNAPSHOT</version>
+          <version>1.0.0-rc.2</version>
     </parent>
 
     <artifactId>schema-auth</artifactId>
