@@ -14,7 +14,7 @@
     <description>API BOM parent module for all DCC API modules</description>
 
     <properties>
-        <version.hu.gov.nav.schemas.common2>2.0.0-rc.1</version.hu.gov.nav.schemas.common2>
+        <version.hu.gov.nav.schemas.common2>2.0.0-rc.2</version.hu.gov.nav.schemas.common2>
     </properties>
 
     <dependencyManagement>
