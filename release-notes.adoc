@@ -3,6 +3,8 @@
 == 1.0.0-rc.2
 
 * GlobalTaxRequest documentation clarification
+* `M2MTokenRequestType` updated to extend `LegacyAuthRequestType` instead of `AuthRequestType`
+* Dependency update `hu.gov.nav.schemas.common2` `2.0.0-rc.1` -> `2.0.0-rc.2`
 
 == 1.0.0-rc.1
 
