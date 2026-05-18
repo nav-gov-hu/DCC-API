@@ -3,6 +3,8 @@
 == 1.0.0-rc.2
 
 * GlobalTaxRequest dokumentáció pontosítása
+* `M2MTokenRequestType` típus alapja `AuthRequestType`-ról `LegacyAuthRequestType`-ra módosítva
+* Függőség frissítése `hu.gov.nav.schemas.common2` `2.0.0-rc.1` -> `2.0.0-rc.2`
 
 == 1.0.0-rc.1
 

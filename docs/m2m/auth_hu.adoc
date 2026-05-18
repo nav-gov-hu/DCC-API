@@ -15,7 +15,7 @@ A hozzáférési token igénylése HTTP POST kéréssel történik, ahol a köve
 
 == Kérés: M2MTokenRequest
 
-A kérés az NTCA `AuthRequestType` kiterjesztése, amely tartalmazza a standard
+A kérés az NTCA `LegacyAuthRequestType` kiterjesztése, amely tartalmazza a standard
 hitelesítési fejlécet, felhasználói adatokat és szoftver azonosítót.
 
 .M2MTokenRequest XML példa
@@ -25,15 +25,15 @@ hitelesítési fejlécet, felhasználói adatokat és szoftver azonosítót.
 <ns3:M2MTokenRequest xmlns="http://schemas.nav.gov.hu/NTCA/2.0/common/service" xmlns:ns2="http://schemas.nav.gov.hu/NTCA/2.0/common/authservice"
     xmlns:ns3="http://schemas.nav.gov.hu/DCC/1.0/m2m/token/tokenapi">
     <context>
-        <requestId>019ce6a6-2a0c-7207-b3f4-cc8373579c7c</requestId>
-        <timestamp>2026-03-13T10:02:55.37291704Z</timestamp>
+        <requestId>1779109982563</requestId>
+        <timestamp>2026-03-13T10:02:55.372Z</timestamp>
     </context>
     <ns2:auth>
         <ns2:login>m2m_user_example</ns2:login> <1>
         <ns2:passwordHash cryptoType="SHA-512">12B03226A6D8BE9C6E8CD5E55DC6C7920CAAA39DF14AAB92D5E3EA9340D1C8A4D3D0B8E4314F1F6EF131BA4BF1CEB9186AB87C801AF0D5C95B1BEFB8CEDAE2B9</ns2:passwordHash> <2>
         <ns2:taxNumber>12345678</ns2:taxNumber> <3>
         <ns2:predecessorTaxNumber></ns2:predecessorTaxNumber> <4>
-        <ns2:requestSignature cryptoType="SHA3-512">6498E406186580DA6403680FD3A6A008FD7F207CA2AFDE5885C38AC700A9A52A3BAADEE914FA0649DBBE103D2D6E99B1236DA403CDD5EF338245A4474770D591</ns2:requestSignature> <5>
+        <ns2:requestSignature cryptoType="SHA3-512">BD9CD4BB9CCCFB04AE24A206DAE13CDE067980074226E1B13CD56F46D678867AB01A79DE05F41197952384D1C1805C0BBC2ACA45A65070B8376B16972DB1EE57</ns2:requestSignature> <5>
     </ns2:auth>
     <ns2:requestVersion>1.0</ns2:requestVersion> <6>
     <ns2:headerVersion>1.0</ns2:headerVersion> <7>
@@ -61,7 +61,7 @@ Egyetlen elfogadott értéke: SHA3-512.
 <6> A `requestVersion` a kérés verzióját jelöli, nem kötelező - ilyenkor a rendszer "1.0" értéket fog kezelni. Jelenleg csak a "1.0" érték fogadható el.
 <7> A `headerVersion` a fejléc verzióját jelöli, nem kötelező - ilyenkor a rendszer "1.0" értéket fog kezelni. Jelenleg csak a "1.0" érték fogadható el.
 
-=== requestSignature számítására
+=== requestSignature számítása
 A `requestSignature` az interfész-authentikáció egyik fő eleme.
 A szerepe, hogy illetéktelenek ne tudjanak a rendszerben változtatásokat végrehajtani.
 A hash értéket a szerver oldal minden operáció minden kérésénél ellenőrzi,
@@ -69,7 +69,7 @@ A hash értéket a szerver oldal minden operáció minden kérésénél ellenőr
 
 A `requestSignature` számítására a következő mezők értékeinek konkatenációjával történik, sorrendben:
 
-. requestId értéke (esetünkben "019ce6a6-2a0c-7207-b3f4-cc8373579c7c")
+. requestId értéke (esetünkben "1779109982563")
 . a timestamp tag értéke "yyyyMMddHHmmss" maszkkal, UTC időben (esetünkben "20260313100255")
 . a technikai felhasználó aláírókulcsának literál értéke (technikai felhasználó létrehozásakor megadott érték).
 Példához ennek legyen az értéke "ce-8f5e-215119fa7dd621DLMRHRLH2S"
@@ -81,13 +81,42 @@ Az így és sorrendben konkatenált string SHA3-512 hash nagybetűsített eredm�
 ----
 requestSignature = SHA3-512(requestId + timestamp + signingKey).UPPERCASE()
 
-requestSignature = SHA3-512(019ce6a6-2a0c-7207-b3f4-cc8373579c7c + 20260313100255 + ce-8f5e-215119fa7dd621DLMRHRLH2S).UPPERCASE()
+requestSignature = SHA3-512(1779109982563 + 20260313100255 + ce-8f5e-215119fa7dd621DLMRHRLH2S).UPPERCASE()
 
-requestSignature = SHA3-512(019ce6a6-2a0c-7207-b3f4-cc8373579c7c20260313100255ce-8f5e-215119fa7dd621DLMRHRLH2S).UPPERCASE()
+requestSignature = SHA3-512(177910998256320260313100255ce-8f5e-215119fa7dd621DLMRHRLH2S).UPPERCASE()
 
-requestSignature = 6498e406186580da6403680fd3a6a008fd7f207ca2afde5885c38ac700a9a52a3baadee914fa0649dbbe103d2d6e99b1236da403cdd5ef338245a4474770d591.UPPERCASE()
+requestSignature = bd9cd4bb9cccfb04ae24a206dae13cde067980074226e1b13cd56f46d678867ab01a79de05f41197952384d1c1805c0bbc2aca45a65070b8376b16972db1ee57.UPPERCASE()
 
-requestSignature = 6498E406186580DA6403680FD3A6A008FD7F207CA2AFDE5885C38AC700A9A52A3BAADEE914FA0649DBBE103D2D6E99B1236DA403CDD5EF338245A4474770D591
+requestSignature = BD9CD4BB9CCCFB04AE24A206DAE13CDE067980074226E1B13CD56F46D678867AB01A79DE05F41197952384D1C1805C0BBC2ACA45A65070B8376B16972DB1EE57
+----
+
+.Java minta
+[source,java]
+----
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.apache.commons.lang3.StringUtils;
+import org.bouncycastle.jcajce.provider.digest.SHA3;
+import org.bouncycastle.util.encoders.Hex;
+
+public final class UamSignGeneratorExample {
+
+    public static String uamAlgorithm(String requestId, OffsetDateTime timestamp, String xmlSignKey) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String timestampString = formatter.format(timestamp);
+
+        String concatenated = StringUtils.join(requestId, timestampString, xmlSignKey);
+
+        SHA3.DigestSHA3 md = new SHA3.DigestSHA3(512);
+        md.update(concatenated.getBytes());
+        byte[] digest = md.digest();
+        String hexDigest = Hex.toHexString(digest);
+
+        return StringUtils.upperCase(hexDigest);
+    }
+}
 ----
 
 == Válasz: M2MTokenResponse
