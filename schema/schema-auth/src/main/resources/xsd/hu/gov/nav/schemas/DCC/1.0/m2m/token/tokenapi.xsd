@@ -20,7 +20,7 @@
             <xs:documentation xml:lang="en">Request type of token</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ntcaAuthService:AuthRequestType" />
+            <xs:extension base="ntcaAuthService:LegacyAuthRequestType" />
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="M2MTokenResponseType">
