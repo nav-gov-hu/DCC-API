@@ -46,7 +46,13 @@ A jelentés állapotának lekérdezése HTTP GET kéréssel történik, ahol a k
 | A jelentés ellenőrzés alatt. Várjon, majd kérdezze le újra az állapotot.
 
 | `VALID`
-| A jelentés érvényes, technikailag sikeresen feldolgozva. Nincs további teendő.
+| A jelentés érvényes, technikailag sikeresen feldolgozva.
+
+| `APPROVED`
+| A jelentés felhasználó által jóváhagyva. Nincs további teendő.
+
+| `DECLINED`
+| A jelentés felhasználó által elutasítva. Nincs további teendő.
 
 | `INVALID`
 | A jelentés érvénytelen. Ellenőrizze az `errorCode` és `anomaly` mezőket

@@ -1,5 +1,9 @@
 = Verziótörténet
 
+== 1.0.0-rc.3
+
+* Az APPROVED és DECLINED értékek hozzáadásra kerültek a FileStatusType típushoz.
+
 == 1.0.0-rc.2
 
 * GlobalTaxRequest dokumentáció pontosítása
