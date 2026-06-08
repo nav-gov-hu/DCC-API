@@ -52,6 +52,18 @@
                     <xs:documentation xml:lang="en">Valid.</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="APPROVED">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Jóváhagyva.</xs:documentation>
+                    <xs:documentation xml:lang="en">Approved.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DECLINED">
+                <xs:annotation>
+                    <xs:documentation xml:lang="hu">Elutasítva.</xs:documentation>
+                    <xs:documentation xml:lang="en">Declined.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="INVALID">
                 <xs:annotation>
                     <xs:documentation xml:lang="hu">Érvénytelen.</xs:documentation>

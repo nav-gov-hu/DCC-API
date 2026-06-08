@@ -46,7 +46,13 @@ The report status is queried via an HTTP GET request with the following settings
 | The report is being validated. Wait and query the status again.
 
 | `VALID`
-| The report is valid, technically processed successfully. No further action required.
+| The report is valid, technically processed successfully.
+
+| `APPROVED`
+| The report has been approved by the user. No further action is required.
+
+| `DECLINED`
+| The report has been declined by the user. No further action is required.
 
 | `INVALID`
 | The report is invalid. Check the `errorCode` and `anomaly` fields
