@@ -3,6 +3,7 @@
 == 1.0.0-rc.3
 
 * Extended FileStatusType with the APPROVED and DECLINED values
+* DAC9 validation error codes documentation publish
 
 == 1.0.0-rc.2
 

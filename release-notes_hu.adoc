@@ -3,6 +3,7 @@
 == 1.0.0-rc.3
 
 * Az APPROVED és DECLINED értékek hozzáadásra kerültek a FileStatusType típushoz.
+* DAC9 validációs hiba lista publikálása
 
 == 1.0.0-rc.2
 
