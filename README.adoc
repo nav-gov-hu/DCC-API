@@ -4,6 +4,7 @@ link:README_en.adoc[English version]
 
 https://nav-gov-hu.github.io/DCC-API/[Teljes dokumentáció [HU\]]
 | https://nav-gov-hu.github.io/DCC-API/index_en.html[Full documentation [EN\]]
+| https://nav-gov-hu.github.io/DCC-API/dac9/validation/dac9-validation-errorcodes.docx[Validation documentation [EN\]]
 
 Üdvözöljük a DCC API publikus tárhelyén!
 

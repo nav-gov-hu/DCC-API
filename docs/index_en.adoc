@@ -10,6 +10,8 @@ ifndef::imagesdir[:imagesdir: ./images]
 
 link:index_hu.html[Magyar verzió]
 
+https://nav-gov-hu.github.io/DCC-API/dac9/validation/dac9-validation-errorcodes.docx[Validation documentation [EN\]]
+
 == Introduction
 
 The *DCC API* (Directive on Administrative Cooperation API) project contains the public schema definitions
