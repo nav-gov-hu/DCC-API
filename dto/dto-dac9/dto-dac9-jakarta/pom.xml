@@ -4,7 +4,7 @@
     <parent>
           <groupId>hu.gov.nav.dcc.api</groupId>
           <artifactId>dto-dac9</artifactId>
-          <version>1.0.0-rc.3-SNAPSHOT</version>
+          <version>1.0.0-rc.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>dto-dac9-jakarta</artifactId>
