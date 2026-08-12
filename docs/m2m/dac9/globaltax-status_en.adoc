@@ -1,6 +1,6 @@
 ifndef::imagesdir[:imagesdir: ./../../images]
 
-= Report status query
+= DAC9 Report status query
 
 The technical processing status of a submitted report can be queried based on the transaction identifier.
 

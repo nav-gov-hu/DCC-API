@@ -1,0 +1,40 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC9 Error codes
+
+List of error codes occurring during DCC API M2M communication.
+
+[Error codes occurring during the submission of the M2M DAC9 global minimum tax report.]
+[cols="1,2,2", options="header"]
+|===
+| Error code | Description | What to do?
+
+| `DUPLICATE_REQUEST_ID`
+| The given request ID already exists in the system!
+| Check the submitted 'GlobalTaxRequestType/context/requestId' value.
+
+| `DUPLICATE_CHECKSUM`
+| The given checksum already exists in the system!
+| Check the submitted 'GlobalTaxRequestType/reportChecksum' value.
+
+| `INVALID_VALUE`
+| The given value is invalid!
+| One of the required fields has an invalid value. Check the submitted 'GlobalTaxRequestType' object.
+
+| `PACKAGED_CONTENT_TOO_LARGE`
+| The unpacked size of the request exceeded the allowable limit!
+| The size of the submitted multipart GZIP (gz) compressed object exceeds the maximum size when unpacked.
+
+| `INVALID_CHECKSUM`
+| The checksum of the submitted object does not match!
+| Check that the checksum of the submitted multipart object matches the 'GlobalTaxRequestType/reportChecksum' value. Make sure that the submitted file is not corrupted.
+
+| `INVALID_COMPRESSED_CONTENT`
+| The uploaded file is not a valid compressed file!
+| Check that the uploaded file is a valid GZIP (gz) compressed file.
+
+| `PAYLOAD_STORE_ERROR`
+| An error occurred while storing the payload!
+| Try uploading again later, or contact customer support!
+
+|===

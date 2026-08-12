@@ -1,6 +1,6 @@
-ifndef::imagesdir[:imagesdir: ./../images]
+ifndef::imagesdir[:imagesdir: ./../../images]
 
-= Authentication - Token request
+= Token request
 
 The first step in M2M communication is requesting an access token through the Token API.
 

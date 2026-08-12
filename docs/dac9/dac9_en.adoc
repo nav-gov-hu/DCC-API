@@ -15,3 +15,5 @@ The DCC-API DAC9 modules contain the implementation of the GloBE Information Ret
 . OECD (2025), GloBE Information Return (Pillar Two) XML Schema: User Guide for Tax Administrations, OECD Publishing, Paris, https://doi.org/10.1787/c594935a-en.
 . OECD (2025), Tax Challenges Arising from the Digitalisation of the Economy - Consolidated Commentary to the Global Anti-Base Erosion Model Rules (2025): Inclusive Framework on BEPS, OECD/G20 Base Erosion and Profit Shifting Project, OECD Publishing, Paris, https://doi.org/10.1787/a551b351-en.
 . OECD (2025), Tax Challenges Arising from the Digitalisation of the Economy - GloBE Information Return (January 2025): Inclusive Framework on BEPS, OECD/G20 Base Erosion and Profit Shifting Project, OECD Publishing, Paris, https://doi.org/10.1787/a05ec99a-en.
+
+https://nav-gov-hu.github.io/DCC-API/dac9/validation/dac9-validation-errorcodes.docx[Validation documentation [EN\]]

@@ -1,0 +1,37 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= Token request error codes
+
+List of error codes occurring during DCC API M2M authentication communication.
+
+List of error codes occurring during the M2M token request.
+[cols="1,2,2", options="header"]
+|===
+| Error code | Description | What to do?
+
+| `SSO_AUTH_FAILED`
+| Invalid SSO login data or missing right!
+| The submitted SSO login data is invalid, or the user does not have the appropriate rights!
+Check the submitted SSO login data and the rights.
+
+| `SSO_INVALID_SIGNATURE`
+| SSO signature is invalid!
+| Check the calculation of the SSO 'requestSignature' value.
+
+| `SSO_INVALID_TIMESTAMP`
+| The received request timestamp is invalid!
+| Check the submitted SSO 'M2MTokenRequest/context/timestamp' value; it cannot be too old or a future timestamp.
+
+| `DCC_AUTH_FAILED`
+| Invalid login data or missing right!
+| Check that the M2M user has the appropriate rights in the DCC system (Not the SSO rights, those have already been successfully logged in).
+
+| `SSO_REQUEST_ID_NOT_UNIQUE`
+| The provided request ID already exists!
+| Check the submitted 'GlobalTaxRequestType/context/requestId' value.
+
+| `SSO_ERROR`
+| SSO error!
+| Try again, or contact customer support.
+
+|===

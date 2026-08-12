@@ -36,9 +36,13 @@ azonban opcionálisan a következő időszinkronizáció lehetséges: http://www
 
 image::m2m-integration.png[align="center", alt="M2M integrációs folyamat"]
 
-include::auth_hu.adoc[leveloffset=+1]
-include::dac9/globaltax_hu.adoc[leveloffset=+1]
-include::dac9/globaltax-status_hu.adoc[leveloffset=+1]
+include::auth/index_hu.adoc[leveloffset=+1]
+
+include::dac9/index_hu.adoc[leveloffset=+1]
+
+== OpenAPI
+
+link:../openapi/public-m2m-openapi.yaml[OpenAPI specifikáció letöltése (YAML),window=_blank]
 
 == Java kliens példa
 

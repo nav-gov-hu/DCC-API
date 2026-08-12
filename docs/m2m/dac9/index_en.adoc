@@ -1,0 +1,9 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC9
+
+include::globaltax_en.adoc[leveloffset=+1]
+
+include::globaltax-status_en.adoc[leveloffset=+1]
+
+include::globaltax-error-codes_en.adoc[leveloffset=+1]

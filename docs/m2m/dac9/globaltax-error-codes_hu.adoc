@@ -1,0 +1,40 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC9 Hiba kódok
+
+DCC API M2M kommunikáció során előforduló hibakódok listája.
+
+.Az M2M DAC9 globális minimumadó jelentés beküldése során előforduló hiba kódok listája.
+[cols="1,2,2", options="header"]
+|===
+| Hiba kód | Leírás | Mi a teendő?
+
+| `DUPLICATE_REQUEST_ID`
+| A megadott kérés azonosítója már létezik a rendszerben!
+| Ellenőrizze a beküldött 'GlobalTaxRequestType/context/requestId' értékét.
+
+| `DUPLICATE_CHECKSUM`
+| A megadott checksum már létezik a rendszerben!
+| Ellenőrizze a beküldött 'GlobalTaxRequestType/reportChecksum' értékét.
+
+| `INVALID_VALUE`
+| A megadott érték érvénytelen!
+| Valamelyik előírt mező értéke érvénytelen. Ellenőrizze a beküldött 'GlobalTaxRequestType' objektumot.
+
+| `PACKAGED_CONTENT_TOO_LARGE`
+| A kicsomagolt kérés mérete meghaladta a befogadható értéket!
+| A beküldött multipart GZIP (gz) tömörített objektum mérete meghaladja a maximális méretet kicsomagolt formában.
+
+| `INVALID_CHECKSUM`
+| A küldött objektum ellenőrző értéke nem egyezik!
+| Ellenőrizze, hogy a beküldött multipart objektum ellenőrző értéke megegyezik-e a 'GlobalTaxRequestType/reportChecksum' értékével. Legyen biztos abban, hogy a beküldött fájl nem sérült.
+
+| `INVALID_COMPRESSED_CONTENT`
+| A feltöltött fájl nem érvényes tömörített fájl!
+| Ellenőrizze, hogy a feltöltött fájl érvényes GZIP (gz) tömörített fájl-e.
+
+| `PAYLOAD_STORE_ERROR`
+| Hiba a letárolás közben!
+| Próbálja újra a feltöltést később, vagy vegye fel a kapcsolatot az ügyfélszolgálattal.
+
+|===

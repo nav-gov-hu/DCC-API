@@ -10,8 +10,6 @@ ifndef::imagesdir[:imagesdir: ./images]
 
 link:index_en.html[English version]
 
-https://nav-gov-hu.github.io/DCC-API/dac9/validation/dac9-validation-errorcodes.docx[Validation documentation [EN\]]
-
 == Bevezetés
 
 A *DCC API* (Directive on Administrative Cooperation API) projekt a 2011/16/EU irányelv (DAC) szerinti

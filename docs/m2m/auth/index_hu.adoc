@@ -1,0 +1,7 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= Autentikáció
+
+include::auth_hu.adoc[leveloffset=+1]
+
+include::auth-error-codes_hu.adoc[leveloffset=+1]
