@@ -1,0 +1,30 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= Token request error codes
+
+List of error codes occurring during DCC API M2M authentication communication.
+
+List of error codes occurring during the M2M token request.
+[cols="1,3", options="header"]
+|===
+| Error code | Description
+
+| `SSO_AUTH_FAILED`
+| Invalid SSO login data or missing right!
+
+| `SSO_INVALID_SIGNATURE`
+| SSO signature is invalid!
+
+| `SSO_INVALID_TIMESTAMP`
+| The received request timestamp is invalid!
+
+| `DCC_AUTH_FAILED`
+| Invalid login data or missing right!
+
+| `SSO_REQUEST_ID_NOT_UNIQUE`
+| The provided request ID already exists!
+
+| `SSO_ERROR`
+| SSO error!
+
+|===

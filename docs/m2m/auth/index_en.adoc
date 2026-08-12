@@ -1,0 +1,7 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= Authentication
+
+include::auth_en.adoc[leveloffset=+1]
+
+include::auth-error-codes_en.adoc[leveloffset=+1]

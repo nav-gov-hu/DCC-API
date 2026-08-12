@@ -1,0 +1,876 @@
+tags:
+- description: |
+    ## Global error handling
+    All endpoints may return the following error base schema type: **[`BaseErrorResultType`](#/components/schemas/BaseErrorResultType)**
+    | HTTP | Name | Description |
+    |-----:|------------------------------|-------------|
+    | 400 | REST_BAD_REQUEST              | Request validation error, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 401 | UNAUTHORIZED                  | Auth error, [`BusinessErrorResponse`](#/components/schemas/BusinessErrorResponse) |
+    | 403 | REST_FORBIDDEN                | The server understood the request, but refuses to authorize it, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 404 | REST_NOT_FOUND                | The requested resource could not be found on the server, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 405 | REST_METHOD_NOT_ALLOWED       | The requested method is not supported for the requested resource, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 406 | REST_NOT_ACCEPTABLE           | The server encountered an unexpected condition that prevented it from fulfilling the request, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 409 | OPTIMISTIC_LOCK               | Optimistic lock error, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 415 | REST_UNSUPPORTED_MEDIA_TYPE   | The request entity has a media type which the server or resource does not support, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 418 | ENTITY_NOT_FOUND              | Entity not found, [`BusinessErrorResponse`](#/components/schemas/BusinessErrorResponse) |
+    | 422 | BUSINESS_EXCEPTION            | Business error, [`BusinessErrorResponse`](#/components/schemas/BusinessErrorResponse) |
+    | 500 | INTERNAL_SERVER_ERROR         | Server error, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+    | 503 | REST_SERVICE_UNAVAILABLE      | The server is currently unable to handle the request due to temporary overloading or maintenance of the server, [`TechnicalErrorResponse`](#/components/schemas/TechnicalErrorResponse) |
+openapi: 3.1.0
+components:
+  schemas:
+    M2MTokenRequest:
+      description: Token request for machine-to-machine (M2M) communication
+      type: object
+      required:
+      - context
+      - auth
+      properties:
+        context:
+          title: context
+          description: The general data of the request.
+          type: object
+          $ref: '#/components/schemas/LegacyContextType'
+        auth:
+          title: auth
+          description: Authentication data
+          type: object
+          $ref: '#/components/schemas/AuthenticationType'
+        requestVersion:
+          type: string
+          title: requestVersion
+          maxLength: 15
+          minLength: 1
+          description: "Request version number, indicating which datastructure the\
+            \ client sends data in, and in\n                                which\
+            \ the response is expected"
+        headerVersion:
+          type: string
+          title: headerVersion
+          maxLength: 15
+          minLength: 1
+          description: Header version number
+    M2MTokenRequestType:
+      description: Request type of token
+      type: object
+      required:
+      - context
+      - auth
+      properties:
+        context:
+          title: context
+          description: The general data of the request.
+          type: object
+          $ref: '#/components/schemas/LegacyContextType'
+        auth:
+          title: auth
+          description: Authentication data
+          type: object
+          $ref: '#/components/schemas/AuthenticationType'
+        requestVersion:
+          type: string
+          title: requestVersion
+          maxLength: 15
+          minLength: 1
+          description: "Request version number, indicating which datastructure the\
+            \ client sends data in, and in\n                                which\
+            \ the response is expected"
+        headerVersion:
+          type: string
+          title: headerVersion
+          maxLength: 15
+          minLength: 1
+          description: Header version number
+    M2MTokenResponse:
+      description: Token response for machine-to-machine (M2M) communication
+      type: object
+      required:
+      - context
+      - resultCode
+      - accessToken
+      - accessTokenExpiryAt
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: '#/components/schemas/ContextType'
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: '#/components/schemas/ResultCodeType'
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        notifications:
+          title: notifications
+          description: Miscellaneous notifications
+          type: object
+          $ref: '#/components/schemas/NotificationsType'
+        accessToken:
+          type: string
+          title: accessToken
+          maxLength: 36
+          minLength: 1
+          pattern: ([0-9]|[a-f]|[A-F]){8}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){12}
+          description: The access token
+        accessTokenExpiryAt:
+          title: accessTokenExpiryAt
+          pattern: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,9})?Z
+          description: The access token expiry date
+          type: string
+          $ref: '#/components/schemas/OffsetDateTime'
+    M2MTokenResponseType:
+      description: Response type of token
+      type: object
+      required:
+      - context
+      - resultCode
+      - accessToken
+      - accessTokenExpiryAt
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: '#/components/schemas/ContextType'
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: '#/components/schemas/ResultCodeType'
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        notifications:
+          title: notifications
+          description: Miscellaneous notifications
+          type: object
+          $ref: '#/components/schemas/NotificationsType'
+        accessToken:
+          type: string
+          title: accessToken
+          maxLength: 36
+          minLength: 1
+          pattern: ([0-9]|[a-f]|[A-F]){8}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){12}
+          description: The access token
+        accessTokenExpiryAt:
+          title: accessTokenExpiryAt
+          pattern: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,9})?Z
+          description: The access token expiry date
+          type: string
+          $ref: '#/components/schemas/OffsetDateTime'
+    OffsetDateTime:
+      type: string
+      format: date-time
+      examples:
+      - '2022-03-10T12:15:50-04:00'
+    NotificationsType:
+      type: object
+      description: Miscellaneous notifications type
+      required:
+      - notification
+      properties:
+        notification:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationType'
+          title: notification
+          description: Notification
+          minItems: 1
+    NotificationType:
+      type: object
+      description: Notification type
+      required:
+      - code
+      - text
+      properties:
+        code:
+          type: string
+          title: code
+          maxLength: 100
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Notification code
+        text:
+          type: string
+          title: text
+          maxLength: 1024
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Notification text
+    ResultCodeType:
+      description: Result code type
+      type: string
+      enum:
+      - ERROR
+      - WARN
+      - INFO
+      - SUCCESS
+    LoggerLevel:
+      title: LoggerLevel
+      type: string
+      enum:
+      - 'OFF'
+      - SEVERE
+      - ERROR
+      - FATAL
+      - WARNING
+      - WARN
+      - INFO
+      - DEBUG
+      - TRACE
+      - CONFIG
+      - FINE
+      - FINER
+      - FINEST
+      - ALL
+    ContextType:
+      type: object
+      description: Communication general data type.
+      required:
+      - requestId
+      - timestamp
+      properties:
+        requestId:
+          type: string
+          title: requestId
+          maxLength: 36
+          minLength: 1
+          pattern: ([0-9]|[a-f]|[A-F]){8}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){12}
+          description: The call identifier, expected to be unique on the client side.
+        timestamp:
+          title: timestamp
+          pattern: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,9})?Z
+          description: The call client time.
+          type: string
+          $ref: '#/components/schemas/OffsetDateTime'
+    AuthenticationType:
+      type: object
+      description: Authentication data type
+      required:
+      - login
+      - passwordHash
+      - taxNumber
+      - requestSignature
+      properties:
+        login:
+          type: string
+          title: login
+          maxLength: 50
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Login name of the technical user
+        passwordHash:
+          title: passwordHash
+          description: Hash value of the technical user's password
+          type: object
+          $ref: '#/components/schemas/CryptoType'
+        taxNumber:
+          type: string
+          title: taxNumber
+          maxLength: 8
+          minLength: 8
+          pattern: '[0-9]{8}'
+          description: The taxpayer's tax number, whose name the technical user operates
+            in
+        predecessorTaxNumber:
+          type: string
+          title: predecessorTaxNumber
+          maxLength: 8
+          minLength: 8
+          pattern: '[0-9]{8}'
+          description: The taxpayer's tax number, whose name the technical user operates
+            in
+        requestSignature:
+          title: requestSignature
+          description: Hash value of the request's signature
+          type: object
+          $ref: '#/components/schemas/CryptoType'
+    CryptoType:
+      type: object
+      description: Denoting type of cryptographic method
+      properties:
+        value:
+          type: string
+          title: value
+        cryptoType:
+          type: string
+          title: cryptoType
+          xml:
+            attribute: true
+    LegacyContextType:
+      type: object
+      description: Communication general data type used by legacy APIs.
+      required:
+      - requestId
+      - timestamp
+      properties:
+        requestId:
+          type: string
+          title: requestId
+          maxLength: 30
+          minLength: 1
+          pattern: '[+a-zA-Z0-9_]{1,30}'
+          description: The call identifier, expected to be unique on the client side.
+        timestamp:
+          title: timestamp
+          pattern: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?Z
+          description: The call client time.
+          type: string
+          $ref: '#/components/schemas/OffsetDateTime'
+    BusinessErrorResponse:
+      description: Business error response.
+      type: object
+      required:
+      - context
+      - resultCode
+      - errorCode
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: '#/components/schemas/ContextType'
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: '#/components/schemas/ResultCodeType'
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        errorCode:
+          type: string
+          title: errorCode
+          maxLength: 100
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Generated error code, type.
+        className:
+          type: string
+          title: className
+          maxLength: 512
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Class name where the error occurred. Not used in production
+            environments.
+        exception:
+          type: string
+          title: exception
+          maxLength: 8192
+          minLength: 1
+          description: Generated exception stacktrace. Not used in production environments.
+        service:
+          type: string
+          title: service
+          maxLength: 200
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Service name where the error occurred. Not used in production
+            environments.
+        causedBy:
+          title: causedBy
+          description: "The cause of the error, the next element in the error chain.\
+            \ Not used in production\n                                environments."
+          type: object
+          $ref: '#/components/schemas/BaseErrorResultType'
+    BaseErrorResultType:
+      description: General error result type.
+      type: object
+      required:
+      - context
+      - resultCode
+      - errorCode
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: '#/components/schemas/ContextType'
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: '#/components/schemas/ResultCodeType'
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        errorCode:
+          type: string
+          title: errorCode
+          maxLength: 100
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Generated error code, type.
+        className:
+          type: string
+          title: className
+          maxLength: 512
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Class name where the error occurred. Not used in production
+            environments.
+        exception:
+          type: string
+          title: exception
+          maxLength: 8192
+          minLength: 1
+          description: Generated exception stacktrace. Not used in production environments.
+        service:
+          type: string
+          title: service
+          maxLength: 200
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Service name where the error occurred. Not used in production
+            environments.
+        causedBy:
+          title: causedBy
+          description: "The cause of the error, the next element in the error chain.\
+            \ Not used in production\n                                environments."
+          type: object
+          $ref: '#/components/schemas/BaseErrorResultType'
+    TechnicalErrorResponse:
+      description: Technical error response.
+      type: object
+      required:
+      - context
+      - resultCode
+      - errorCode
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: '#/components/schemas/ContextType'
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: '#/components/schemas/ResultCodeType'
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        errorCode:
+          type: string
+          title: errorCode
+          maxLength: 100
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Generated error code, type.
+        className:
+          type: string
+          title: className
+          maxLength: 512
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Class name where the error occurred. Not used in production
+            environments.
+        exception:
+          type: string
+          title: exception
+          maxLength: 8192
+          minLength: 1
+          description: Generated exception stacktrace. Not used in production environments.
+        service:
+          type: string
+          title: service
+          maxLength: 200
+          minLength: 1
+          pattern: .*[^\s].*
+          description: Service name where the error occurred. Not used in production
+            environments.
+        causedBy:
+          title: causedBy
+          description: "The cause of the error, the next element in the error chain.\
+            \ Not used in production\n                                environments."
+          type: object
+          $ref: '#/components/schemas/BaseErrorResultType'
+    GlobalTaxRequest:
+      description: |-
+        Request of DAC-9 global minimum level of taxation report registration for multinational enterprise groups
+                        (MNEs) and large-scale domestic groups (LSDGs) in the EU.
+      type: object
+      required:
+      - context
+      - compressedContent
+      - reportType
+      - reportChecksum
+      properties:
+        context:
+          title: context
+          description: The general data of the request.
+          type: object
+          $ref: "#/components/schemas/ContextType"
+        compressedContent:
+          type: boolean
+          title: compressedContent
+          description: Compressed content indicator for the processing flow.
+        reportType:
+          title: reportType
+          maxLength: 15
+          minLength: 1
+          pattern: ".*[^\\s].*"
+          description: Report type in the registration request.
+          type: string
+          $ref: "#/components/schemas/ReportTypeType"
+        reportChecksum:
+          title: reportChecksum
+          description: |-
+            The checksum value of the report for content integrity verification. If the content is
+                                            compressed, the checksum of the decompressed content.
+          type: object
+          $ref: "#/components/schemas/CryptoType"
+    ReportTypeType:
+      description: The report type of DAC-9 global minimum level of taxation.
+      type: string
+      enum:
+      - GLOBE_OECD_V1
+    GlobalTaxResponse:
+      description: |-
+        Response of DAC-9 global minimum level of taxation for multinational enterprise groups (MNEs) and
+                        large-scale domestic groups (LSDGs) in the EU.
+      type: object
+      required:
+      - context
+      - resultCode
+      - globalTaxReportId
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: "#/components/schemas/ContextType"
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: "#/components/schemas/ResultCodeType"
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        globalTaxReportId:
+          type: string
+          title: globalTaxReportId
+          maxLength: 36
+          minLength: 1
+          pattern: "([0-9]|[a-f]|[A-F]){8}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){12}"
+          description: Transaction identifier of the requested operation.
+    ReportStatusResponse:
+      description: Response of the report technical status.
+      type: object
+      required:
+      - context
+      - resultCode
+      - reportStatus
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: "#/components/schemas/ContextType"
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: "#/components/schemas/ResultCodeType"
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        reportStatus:
+          title: reportStatus
+          description: The validation status of the submitted report.
+          type: object
+          $ref: "#/components/schemas/ReportStatusType"
+    ReportStatusType:
+      type: object
+      description: The type of the report status.
+      required:
+      - status
+      properties:
+        status:
+          title: status
+          maxLength: 10
+          minLength: 1
+          description: The status of the report.
+          type: string
+          $ref: "#/components/schemas/FileStatusType"
+        errorCode:
+          type: string
+          title: errorCode
+          maxLength: 30
+          minLength: 1
+          description: The error code.
+        anomaly:
+          type: array
+          items:
+            $ref: "#/components/schemas/DtoValidationType"
+          title: anomaly
+          description: Validation anomaly.
+          minItems: 0
+    DtoValidationType:
+      type: object
+      description: DTO validation error type.
+      properties:
+        field:
+          type: string
+          title: field
+          maxLength: 100
+          minLength: 1
+          pattern: ".*[^\\s].*"
+          description: The field of the problem.
+        error:
+          type: string
+          title: error
+          maxLength: 1024
+          minLength: 1
+          pattern: ".*[^\\s].*"
+          description: Description of the problem.
+        lineNumber:
+          type: integer
+          format: int32
+          title: lineNumber
+          maximum: 2147483647
+          minimum: -2147483648
+          description: The line of the source of the problem.
+        columnNumber:
+          type: integer
+          format: int32
+          title: columnNumber
+          maximum: 2147483647
+          minimum: -2147483648
+          description: The column of the source of the problem.
+    FileStatusType:
+      description: File status type.
+      type: string
+      enum:
+      - UPLOADED
+      - VALIDATING
+      - VALID
+      - APPROVED
+      - DECLINED
+      - INVALID
+  securitySchemes:
+    SecurityScheme:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Authentication
+paths:
+  /dcc/m2m/v1/token:
+    post:
+      summary: M2M token retrieval
+      description: The access token for machine-to-machine (M2M) communication on
+        the NAV DCC Platform.
+      tags:
+      - M2M token
+      requestBody:
+        content:
+          text/xml:
+            schema:
+              $ref: '#/components/schemas/M2MTokenRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/M2MTokenRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/M2MTokenResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/M2MTokenResponse'
+        '400':
+          description: Client related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+        '500':
+          description: Server related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: Accept-Language http header. If not specified, the default language
+          will be Hungarian.
+        required: false
+        schema: {}
+  /dcc/m2m/v1/dac9/globaltax/report:
+    post:
+      summary: Global tax report upload
+      description: |2
+         DAC-9 global minimum tax report
+      tags:
+      - Global tax
+      requestBody:
+        description: Multipart form data containing GlobalTax XML binary file content.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                metadata:
+                  $ref: "#/components/schemas/GlobalTaxRequest"
+                report:
+                  type: string
+                  format: binary
+            encoding:
+              metadata:
+                contentType: application/xml
+              report:
+                contentType: application/octet-stream
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/GlobalTaxRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/xml:
+              schema:
+                $ref: "#/components/schemas/GlobalTaxResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/GlobalTaxResponse"
+        '400':
+          description: Client related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+        '500':
+          description: Server related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: "Accept-Language http header. If not specified, the default language\
+          \ will be Hungarian."
+        required: false
+        schema: {}
+      - name: Authorization
+        in: header
+        description: "Bearer {access_token}"
+        required: true
+        schema: {}
+  /dcc/m2m/v1/dac9/globaltax/report/{globalTaxReportId}/status:
+    get:
+      summary: Global tax report status
+      description: Gets the status of a submitted global tax report
+      tags:
+      - Global tax
+      parameters:
+      - description: Azonosító
+        name: globalTaxReportId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Accept-Language
+        in: header
+        description: "Accept-Language http header. If not specified, the default language\
+          \ will be Hungarian."
+        required: false
+        schema: {}
+      - name: Authorization
+        in: header
+        description: "Bearer {access_token}"
+        required: true
+        schema: {}
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/xml:
+              schema:
+                $ref: "#/components/schemas/ReportStatusResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ReportStatusResponse"
+        '400':
+          description: Client related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+        '500':
+          description: Server related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+info:
+  title: NAV DCC Service API
+  version: 1.0.0-rc.3
+  description: NAV DCC Platform M2M Services - https://github.com/nav-gov-hu/DCC-API
+servers:
+- url: https://api-dacentral-test.nav.gov.hu
+  description: Test environment
+- url: https://api-dacentral.nav.gov.hu
+  description: Production environment

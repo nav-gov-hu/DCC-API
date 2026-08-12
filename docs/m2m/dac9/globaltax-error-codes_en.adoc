@@ -1,0 +1,43 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC9 Error codes
+
+List of error codes occurring during DCC API M2M communication.
+
+[Error codes occurring during the submission of the M2M DAC9 global minimum tax report.]
+[cols="1,3", options="header"]
+|===
+| Error code | Description
+
+| `DUPLICATE_REQUEST_ID`
+| The given request ID already exists in the system!
+
+| `DUPLICATE_CHECKSUM`
+| The given checksum already exists in the system!
+
+| `INVALID_VALUE`
+| The given value is invalid!
+
+| `PACKAGED_CONTENT_TOO_LARGE`
+| The unpacked size of the request exceeded the allowable limit!
+
+| `INVALID_CHECKSUM`
+| The checksum of the submitted object does not match!
+
+| `INVALID_COMPRESSED_CONTENT`
+| The uploaded file is not a valid compressed file!
+
+| `PAYLOAD_STORE_ERROR`
+| An error occurred while storing the payload!
+
+|===
+
+[Error codes occurring during the status query of the M2M DAC9 global minimum tax report.]
+[cols="1,3", options="header"]
+|===
+| Error code | Description
+
+| `INVALID_REQUEST_STATUS`
+| The request object is in an invalid status.
+
+|===

@@ -36,9 +36,13 @@ and to consider the version number when processing requests and responses.
 
 image::m2m-integration.png[align="center", alt="M2M integration process"]
 
-include::auth_en.adoc[leveloffset=+1]
-include::dac9/globaltax_en.adoc[leveloffset=+1]
-include::dac9/globaltax-status_en.adoc[leveloffset=+1]
+include::auth/index_en.adoc[leveloffset=+1]
+
+include::dac9/index_en.adoc[leveloffset=+1]
+
+== OpenAPI
+
+link:../openapi/public-m2m-openapi.yaml[Download OpenAPI specification (YAML),window=_blank]
 
 == Java client example
 

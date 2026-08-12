@@ -1,6 +1,6 @@
 ifndef::imagesdir[:imagesdir: ./../../images]
 
-= Jelentés állapot lekérdezés
+= DAC9 Jelentés állapot lekérdezés
 
 A beküldött jelentés technikai feldolgozási állapota lekérdezhető a tranzakció azonosító alapján.
 

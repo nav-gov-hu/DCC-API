@@ -1,0 +1,43 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC9 Hiba kódok
+
+DCC API M2M kommunikáció során előforduló hibakódok listája.
+
+.Az M2M DAC9 globális minimumadó jelentés beküldése során előforduló hiba kódok listája.
+[cols="1,3", options="header"]
+|===
+| Hiba kód | Leírás
+
+| `DUPLICATE_REQUEST_ID`
+| A megadott kérés azonosítója már létezik a rendszerben!
+
+| `DUPLICATE_CHECKSUM`
+| A megadott checksum már létezik a rendszerben!
+
+| `INVALID_VALUE`
+| A megadott érték érvénytelen!
+
+| `PACKAGED_CONTENT_TOO_LARGE`
+| A kicsomagolt kérés mérete meghaladta a befogadható értéket!
+
+| `INVALID_CHECKSUM`
+| A küldött objektum ellenőrző értéke nem egyezik!
+
+| `INVALID_COMPRESSED_CONTENT`
+| A feltöltött fájl nem érvényes tömörített fájl!
+
+| `PAYLOAD_STORE_ERROR`
+| Hiba a letárolás közben!
+
+|===
+
+.Az M2M DAC9 globális minimumadó státusz lekérdezése során előforduló hiba kódok listája.
+[cols="1,3", options="header"]
+|===
+| Hiba kód | Leírás
+
+| `INVALID_REQUEST_STATUS`
+| Az objektum nincs megfelelő állapotban.
+
+|===
