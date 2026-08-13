@@ -42,7 +42,7 @@ include::dac9/index_hu.adoc[leveloffset=+1]
 
 == OpenAPI
 
-link:../openapi/public-m2m-openapi.yaml[OpenAPI specifikáció letöltése (YAML),window=_blank]
+https://nav-gov-hu.github.io/DCC-API/openapi/public-m2m-openapi.yaml[OpenAPI specifikáció letöltése (YAML),window=_blank]
 
 == Java kliens példa
 
