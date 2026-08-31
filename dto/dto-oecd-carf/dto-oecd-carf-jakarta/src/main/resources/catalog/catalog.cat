@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+
+    <public publicId="urn:oecd:ties:carf:v1"
+        uri="maven:hu.gov.nav.dcc.api:schema-oecd-carf:jar::!/xsd/urn/oecd/ties/carf/v1/CARFXML_v1.5.xsd" />
+    <public publicId="urn:oecd:ties:isocarftypes:v1"
+        uri="maven:hu.gov.nav.dcc.api:schema-oecd-carf:jar::!/xsd/urn/oecd/ties/carf/v1/isocarftypes_v1.1.xsd" />
+    <public publicId="urn:oecd:ties:carfstf:v5"
+        uri="maven:hu.gov.nav.dcc.api:schema-oecd-carf:jar::!/xsd/urn/oecd/ties/carf/v1/oecdcarftypes_v5.0.xsd" />
+
+</catalog>

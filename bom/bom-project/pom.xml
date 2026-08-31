@@ -15,9 +15,50 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- AUTH -->
             <dependency>
                 <groupId>hu.gov.nav.dcc.api</groupId>
                 <artifactId>schema-auth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>dto-auth-jakarta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- DAC8 -->
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>schema-oecd-carf</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>dto-oecd-carf-jakarta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>schema-dac8</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>dto-dac8-jakarta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- DAC9 -->
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>schema-oecd-globe</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>hu.gov.nav.dcc.api</groupId>
+                <artifactId>dto-oecd-globe-jakarta</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -27,25 +68,10 @@
             </dependency>
             <dependency>
                 <groupId>hu.gov.nav.dcc.api</groupId>
-                <artifactId>schema-oecd-globe</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>hu.gov.nav.dcc.api</groupId>
-                <artifactId>dto-auth-jakarta</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>hu.gov.nav.dcc.api</groupId>
                 <artifactId>dto-dac9-jakarta</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>hu.gov.nav.dcc.api</groupId>
-                <artifactId>dto-oecd-globe-jakarta</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

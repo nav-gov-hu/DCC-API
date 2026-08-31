@@ -1,0 +1,18 @@
+ifndef::imagesdir[:imagesdir: ./images]
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+= DAC8 - Crypto-Asset Reporting Framework (CARF)
+
+DAC8 is one of the tax data exchange services under Directive 2011/16/EU (DAC),
+providing XML schemas for reporting crypto-asset transactions by reporting crypto-asset service providers (RCASPs).
+The DCC-API DAC8 modules contain the implementation of the Crypto-Asset Reporting Framework (CARF) XML schema,
+published by the OECD:
+
+. OECD (2024), Crypto-Asset Reporting Framework XML Schema: User Guide for Tax Administrations, OECD Publishing, Paris, https://doi.org/10.1787/578052ec-en.
+
+https://nav-gov-hu.github.io/DCC-API/dac8/validation/DAC8-validation-errorcodes-v1.01.docx[Validation documentation [EN\]]

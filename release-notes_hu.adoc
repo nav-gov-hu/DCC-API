@@ -1,5 +1,14 @@
 = Verziótörténet
 
+== 1.1.0
+
+* DAC8 CARF API jelentés és státusz lekérdezés bevezetése
+
+== 1.0.0
+
+* DAC9 hitelesítés és hiba kód dokumentáció hozzáadva
+* Nincs tartalmi változás az előző verzióhoz képest
+
 == 1.0.0-rc.3
 
 * Az APPROVED és DECLINED értékek hozzáadásra kerültek a FileStatusType típushoz.

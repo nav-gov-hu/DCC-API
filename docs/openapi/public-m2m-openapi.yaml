@@ -687,6 +687,71 @@ components:
       - APPROVED
       - DECLINED
       - INVALID
+    CarfRequest:
+      description: Request of DAC-8 CARF (Crypto-Asset Reporting Framework) report registration by reporting crypto asset providers.
+      type: object
+      required:
+      - context
+      - compressedContent
+      - reportType
+      - reportChecksum
+      properties:
+        context:
+          title: context
+          description: The general data of the request.
+          type: object
+          $ref: "#/components/schemas/ContextType"
+        compressedContent:
+          type: boolean
+          title: compressedContent
+          description: Compressed content indicator for the processing flow.
+        reportType:
+          type: string
+          title: reportType
+          maxLength: 20
+          minLength: 1
+          pattern: ".*[^\\s].*"
+          description: Report type in the registration request.
+        reportChecksum:
+          title: reportChecksum
+          description: |-
+            The checksum value of the report for content integrity verification. If the content is
+                                            compressed, the checksum of the decompressed content.
+          type: object
+          $ref: "#/components/schemas/CryptoType"
+    CarfResponse:
+      description: Response of DAC-8 CARF (Crypto-Asset Reporting Framework) report registration by reporting crypto asset providers.
+      type: object
+      required:
+      - context
+      - resultCode
+      - globalTaxReportId
+      properties:
+        context:
+          title: context
+          description: The general data of the result.
+          type: object
+          $ref: "#/components/schemas/ContextType"
+        resultCode:
+          title: resultCode
+          maxLength: 7
+          minLength: 1
+          description: The result code indicates the success of the call.
+          type: string
+          $ref: "#/components/schemas/ResultCodeType"
+        message:
+          type: string
+          title: message
+          maxLength: 4000
+          minLength: 1
+          description: The result message.
+        carfReportId:
+          type: string
+          title: carfReportId
+          maxLength: 36
+          minLength: 1
+          pattern: "([0-9]|[a-f]|[A-F]){8}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){4}-([0-9]|[a-f]|[A-F]){12}"
+          description: Transaction identifier of the requested operation.
   securitySchemes:
     SecurityScheme:
       type: http
@@ -745,13 +810,133 @@ paths:
           will be Hungarian.
         required: false
         schema: {}
+  /dcc/m2m/v1/dac8/carf/report:
+    post:
+      summary: CARF report upload
+      description: |2
+         DAC-8 Crypto-Asset Reporting Framework (CARF) report
+      tags:
+      - DAC8 Carf
+      requestBody:
+        description: Multipart form data containing CARF XML binary file content.
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                metadata:
+                  $ref: "#/components/schemas/CarfRequest"
+                report:
+                  type: string
+                  format: binary
+            encoding:
+              metadata:
+                contentType: application/xml
+              report:
+                contentType: application/octet-stream
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/CarfRequest"
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/xml:
+              schema:
+                $ref: "#/components/schemas/CarfResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CarfResponse"
+        '400':
+          description: Client related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+        '500':
+          description: Server related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+      parameters:
+      - name: Accept-Language
+        in: header
+        description: "Accept-Language http header. If not specified, the default language\
+          \ will be Hungarian."
+        required: false
+        schema: {}
+      - name: Authorization
+        in: header
+        description: "Bearer {access_token}"
+        required: true
+        schema: {}
+  /dcc/m2m/v1/dac8/carf/report/{carfReportId}/status:
+    get:
+      summary: CARF report status
+      description: Gets the status of a submitted CARF report
+      tags:
+      - DAC8 Carf
+      parameters:
+      - description: Azonosító
+        name: carfReportId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Accept-Language
+        in: header
+        description: "Accept-Language http header. If not specified, the default language\
+          \ will be Hungarian."
+        required: false
+        schema: {}
+      - name: Authorization
+        in: header
+        description: "Bearer {access_token}"
+        required: true
+        schema: {}
+      responses:
+        "200":
+          description: Successful response
+          content:
+            text/xml:
+              schema:
+                $ref: "#/components/schemas/ReportStatusResponse"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/ReportStatusResponse"
+        '400':
+          description: Client related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/BusinessErrorResponse'
+        '500':
+          description: Server related error
+          content:
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TechnicalErrorResponse'
   /dcc/m2m/v1/dac9/globaltax/report:
     post:
       summary: Global tax report upload
       description: |2
          DAC-9 global minimum tax report
       tags:
-      - Global tax
+      - DAC9 Global tax
       requestBody:
         description: Multipart form data containing GlobalTax XML binary file content.
         content:
@@ -818,7 +1003,7 @@ paths:
       summary: Global tax report status
       description: Gets the status of a submitted global tax report
       tags:
-      - Global tax
+      - DAC9 Global tax
       parameters:
       - description: Azonosító
         name: globalTaxReportId

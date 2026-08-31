@@ -25,15 +25,21 @@ DCC-API
 │   └── bom-project/           # Project modules only BOM
 ├── schema/
 │   ├── schema-auth/           # M2M Token API schema
-│   ├── schema-dac9/           # DAC9 Global Tax API schema
-│   └── schema-oecd-globe/     # OECD GLOBE Pillar Two third-party schemas
+│   ├── schema-oecd-carf/      # OECD CARF third-party schemas
+│   ├── schema-dac8/           # DAC8 CARF envelope API schema
+│   ├── schema-oecd-globe/     # OECD GLOBE Pillar Two third-party schemas
+│   └── schema-dac9/           # DAC9 Global Tax API schema
 ├── dto/
 │   ├── dto-auth/
 │   │   └── dto-auth-jakarta/  # Generated Jakarta EE DTOs from schema-auth
-│   ├── dto-dac9/
-│   │   └── dto-dac9-jakarta/  # Generated Jakarta EE DTOs from schema-dac9
-│   └── dto-oecd-globe/
-│       └── dto-oecd-globe-jakarta/  # Generated Jakarta EE DTOs from OECD GLOBE schema
+│   ├── dto-oecd-carf/
+│   │   └── dto-oecd-carf-jakarta/  # Generated Jakarta EE DTOs from OECD CARF schema
+│   ├── dto-dac8/
+│   │   └── dto-dac8-jakarta/  # Generated Jakarta EE DTOs from schema-dac8
+│   ├── dto-oecd-globe/
+│   │   └── dto-oecd-globe-jakarta/  # Generated Jakarta EE DTOs from OECD GLOBE schema
+│   └── dto-dac9/
+│       └── dto-dac9-jakarta/  # Generated Jakarta EE DTOs from schema-dac9
 └── docs/                      # Documentation
 ----
 
@@ -45,15 +51,25 @@ DCC-API
 
 Contains the XSD schema for the M2M authentication token API.
 
-==== schema-dac9
+==== schema-oecd-carf
 
-Contains the API XSD schema for DAC-9 services.
+Contains the OECD Crypto-Asset Reporting Framework (CARF) XML schemas.
+These are third-party XSD definitions published by the https://www.oecd.org/en/publications/crypto-asset-reporting-framework-xml-schema_578052ec-en/support-materials.html[OECD],
+serving as the basis for content validation of DAC8 CARF reports.
+
+==== schema-dac8
+
+Contains the API XSD schema for DAC-8 services (the `CarfRequest` / `CarfResponse` envelope).
 
 ==== schema-oecd-globe
 
 Contains the OECD GLOBE (Global Anti-Base Erosion) Pillar Two Information Return XML schemas.
 These are third-party XSD definitions published by the https://www.oecd.org/en/publications/globe-information-return-pillar-two-xml-schema_c594935a-en/support-materials.html[OECD],
 serving as the basis for content validation of DAC9 global minimum tax reports.
+
+==== schema-dac9
+
+Contains the API XSD schema for DAC-9 services.
 
 === DTO modules
 
@@ -65,13 +81,22 @@ Jakarta EE DTO classes generated from `schema-auth` XSD schemas using JAXB.
 ** `hu.gov.nav.schemas.common2:dto-jakarta` - Common NTCA 2.0 DTOs
 ** `hu.gov.nav.dcc.api:schema-auth` - Auth schema definitions
 
-==== dto-dac9-jakarta
+==== dto-oecd-carf-jakarta
 
-Jakarta EE DTO classes generated from `schema-dac9` XSD schemas using JAXB.
+Jakarta EE DTO classes generated from `schema-oecd-carf` OECD CARF XSD schemas using JAXB.
+This module is standalone and does not use the Episode mechanism, as the OECD types are completely independent of the NTCA Common types.
+
+* *Dependencies:*
+** `hu.gov.nav.schemas.common2:core-jakarta` - Common NTCA 2.0 core module
+** `hu.gov.nav.dcc.api:schema-oecd-carf` - OECD CARF schema definitions
+
+==== dto-dac8-jakarta
+
+Jakarta EE DTO classes generated from `schema-dac8` XSD schemas using JAXB.
 
 * *Dependencies:*
 ** `hu.gov.nav.schemas.common2:dto-jakarta` - Common NTCA 2.0 DTOs
-** `hu.gov.nav.dcc.api:schema-dac9` - DAC9 schema definitions
+** `hu.gov.nav.dcc.api:schema-dac8` - DAC8 schema definitions
 
 ==== dto-oecd-globe-jakarta
 
@@ -81,6 +106,14 @@ This module is standalone and does not use the Episode mechanism, as the OECD ty
 * *Dependencies:*
 ** `hu.gov.nav.schemas.common2:core-jakarta` - Common NTCA 2.0 core module
 ** `hu.gov.nav.dcc.api:schema-oecd-globe` - OECD GLOBE schema definitions
+
+==== dto-dac9-jakarta
+
+Jakarta EE DTO classes generated from `schema-dac9` XSD schemas using JAXB.
+
+* *Dependencies:*
+** `hu.gov.nav.schemas.common2:dto-jakarta` - Common NTCA 2.0 DTOs
+** `hu.gov.nav.dcc.api:schema-dac9` - DAC9 schema definitions
 
 == Dependency diagram
 
@@ -100,8 +133,20 @@ The project uses the following namespace hierarchy:
 | `+http://schemas.nav.gov.hu/DCC/1.0/m2m/token/*+`
 | DCC M2M authentication schemas
 
+| `+http://schemas.nav.gov.hu/DCC/1.0/m2m/dac8/*+`
+| DCC M2M DAC8 schemas
+
 | `+http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/*+`
 | DCC M2M DAC9 schemas
+
+| `+urn:oecd:ties:carf:v1+`
+| OECD CARF (Crypto-Asset Reporting Framework) main schema
+
+| `+urn:oecd:ties:isocarftypes:v1+`
+| OECD CARF ISO country, currency, and language code types
+
+| `+urn:oecd:ties:carfstf:v5+`
+| OECD CARF reusable types
 
 | `+urn:oecd:ties:globe:v2+`
 | OECD GLOBE Information Return main schema

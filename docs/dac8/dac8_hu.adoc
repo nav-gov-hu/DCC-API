@@ -1,0 +1,18 @@
+ifndef::imagesdir[:imagesdir: ./images]
+:toc: left
+:toclevels: 3
+:sectnums:
+:icons: font
+:source-highlighter: highlight.js
+:nofooter:
+
+= DAC8 - Kriptoeszköz Adatszolgáltatási Keretrendszer (CARF)
+
+A DAC8 a 2011/16/EU irányelv (DAC) szerinti adóügyi adatcsere egyik szolgáltatása,
+amely a kriptoeszköz-szolgáltatók (RCASP) által végzett kriptoeszköz tranzakciók jelentésére vonatkozó XML sémákat tartalmazza.
+A DCC-API DAC8 moduljai a Crypto-Asset Reporting Framework (CARF) XML séma implementációját tartalmazzák,
+amelyet az OECD publikált:
+
+. OECD (2024), Kriptoeszköz-jelentési keretrendszer (Crypto-Asset Reporting Framework) XML séma: Felhasználói útmutató adóhatóságok számára, OECD Kiadó, Párizs, https://doi.org/10.1787/578052ec-en.
+
+https://nav-gov-hu.github.io/DCC-API/dac8/validation/DAC8-validation-errorcodes-v1.01.docx[Validációs dokumentáció [EN\]]

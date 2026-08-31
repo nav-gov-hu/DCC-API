@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 rel. 2 sp1 (x64) (http://www.altova.com) by Accounting Division (OECD) -->
+<xsd:schema xmlns:carf="urn:oecd:ties:carf:v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:stf="urn:oecd:ties:carfstf:v5" xmlns:iso="urn:oecd:ties:isocarftypes:v1" targetNamespace="urn:oecd:ties:carf:v1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.5">
+	<xsd:import namespace="urn:oecd:ties:isocarftypes:v1" schemaLocation="isocarftypes_v1.1.xsd"/>
+	<xsd:import namespace="urn:oecd:ties:carfstf:v5" schemaLocation="oecdcarftypes_v5.0.xsd"/>
+	<!--+++++++++++++++++++++++  Reusable Simple types ++++++++++++++++++++++++++++++++++++++ -->
+	<!-- Message type definitions -->
+	<xsd:simpleType name="MessageType_EnumType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Message type defines the type of reporting </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!--Transfer Type - 401 to 404-->
+	<xsd:simpleType name="ExchangeType_EnumType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Transfer Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF401">
+				<xsd:annotation>
+					<xsd:documentation>Staking</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF402">
+				<xsd:annotation>
+					<xsd:documentation>Crypto Loan</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF403">
+				<xsd:annotation>
+					<xsd:documentation>Wrapping</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF404">
+				<xsd:annotation>
+					<xsd:documentation>Collateral</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!--Transfer Type - 501 to 507-->
+	<xsd:simpleType name="TransferType_EnumType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Transfer Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF501">
+				<xsd:annotation>
+					<xsd:documentation>Airdrop</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF502">
+				<xsd:annotation>
+					<xsd:documentation>Staking income</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF503">
+				<xsd:annotation>
+					<xsd:documentation>Mining income</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF504">
+				<xsd:annotation>
+					<xsd:documentation>Crpyto loan</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF505">
+				<xsd:annotation>
+					<xsd:documentation>Transfer from another RCASP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF506">
+				<xsd:annotation>
+					<xsd:documentation>Sale of goods or services</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF507">
+				<xsd:annotation>
+					<xsd:documentation>Collateral</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF508">
+				<xsd:annotation>
+					<xsd:documentation>Other</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF509">
+				<xsd:annotation>
+					<xsd:documentation>Unknown (to be selected as the default value where the Reporting Crypto-Asset Service Provider has no knowledge on the Transfer Type)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!-- Account Number Type - 601 to 604-->
+	<xsd:simpleType name="TransferOutType_EnumType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Account Number Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF601">
+				<xsd:annotation>
+					<xsd:documentation>Transfer to another RCASP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF602">
+				<xsd:annotation>
+					<xsd:documentation>Crypto Loan</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF603">
+				<xsd:annotation>
+					<xsd:documentation>Purchase of goods or services, to be used in respect of transactions other than those already reported as Reportable Retail Payment Transactions</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF604">
+				<xsd:annotation>
+					<xsd:documentation>Collateral</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF605">
+				<xsd:annotation>
+					<xsd:documentation>Other</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF606">
+				<xsd:annotation>
+					<xsd:documentation>Unknown (to be selected as the default value where the Reporting Crypto-Asset Service Provider has no knowledge on the Transfer Type)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!-- MessageTypeIndic - 701 to 703 -->
+	<xsd:simpleType name="CarfMessageTypeIndic_EnumType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">The MessageTypeIndic defines the type of message sent</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF701">
+				<xsd:annotation>
+					<xsd:documentation>The message contains new information</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF702">
+				<xsd:annotation>
+					<xsd:documentation>The message contains corrections/deletions for previously sent information. When the MesseageTypeIndic is CARF702, the DocTypeIndic can contain either Corrections (OECD2) or Deletions (OECD3) or both, but new data (OECD1) cannot be contained. Note that OECD0 can be included for RCASP's DocTypeIndic.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF703">
+				<xsd:annotation>
+					<xsd:documentation>The message advises there is no data to report</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!-- Controlling Person Type - 801 to 813 -->
+	<xsd:simpleType name="CarfCtrlgPersonType_EnumType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Controlling Person Type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF801">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal person - ownership</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF802">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal person - other means</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF803">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal person - senior managing official</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF804">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - trust - settlor</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF805">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - trust - trustee</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF806">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - trust - protector</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF807">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - trust - beneficiary</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF808">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - trust - other</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF809">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - other - settlor-equivalent</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF810">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - other - trustee-equivalent</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF811">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - other - protector-equivalent</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF812">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - other - beneficiary-equivalent</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF813">
+				<xsd:annotation>
+					<xsd:documentation>CP of legal arrangement - other - other-equivalent</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!--CARF Nexus Type -  901 to 907 -->
+	<xsd:simpleType name="Nexus_EnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF901">
+				<xsd:annotation>
+					<xsd:documentation>Tax Residence</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF902">
+				<xsd:annotation>
+					<xsd:documentation>Incorporation</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF903">
+				<xsd:annotation>
+					<xsd:documentation>Management</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF904">
+				<xsd:annotation>
+					<xsd:documentation>Place of Business</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF905">
+				<xsd:annotation>
+					<xsd:documentation>Branch</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF906">
+				<xsd:annotation>
+					<xsd:documentation>Authorisation</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF907">
+				<xsd:annotation>
+					<xsd:documentation>Remote Services</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!--CARF Alt Valuation Type -  1001 to 1004 -->
+	<xsd:simpleType name="AltValuation_EnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CARF1001">
+				<xsd:annotation>
+					<xsd:documentation>Book value</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF1002">
+				<xsd:annotation>
+					<xsd:documentation>Third-party value</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF1003">
+				<xsd:annotation>
+					<xsd:documentation>Recent RCASP valuation</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CARF1004">
+				<xsd:annotation>
+					<xsd:documentation>Reasonable estimate by RCASP</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<xsd:simpleType name="TwoDigFract_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Data type for any kind of numeric data with two decimal fraction digits, especially monetary amounts.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<xsd:simpleType name="SixDigFract_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Data type for any kind of numeric data with six decimal fraction digits, especially monetary amounts.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!--  -->
+	<!--++++++++++++++++++ Reusable Complex types +++++++++++++++++++++++++++++++++++++ -->
+	<!-- Message specification: Data identifying and describing the message as a whole -->
+	<xsd:complexType name="RCASP_Type">
+		<xsd:sequence>
+			<xsd:element name="RCASP_ID">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="Individual" type="carf:PersonParty_Type"/>
+						<xsd:element name="Entity" type="carf:OrganisationParty_Type"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Nexus" type="carf:Nexus_EnumType" minOccurs="0"/>
+			<xsd:element name="OtherNexus" minOccurs="0">
+				<xsd:complexType>
+					<xsd:attribute name="Nexus" type="carf:Nexus_EnumType" use="required"/>
+					<xsd:attribute name="ResCountryCode" type="iso:CountryCode_Type" use="required"/>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="DocSpec" type="stf:DocSpec_Type"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<xsd:complexType name="CryptoUsers_Type">
+		<xsd:sequence>
+			<xsd:element name="UserID">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="Individual" type="carf:PersonParty_Type"/>
+						<xsd:element name="Entity" type="carf:OrganisationParty_Type"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ControllingPerson" type="carf:ControllingPerson_Type" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="RelevantTransactions" type="carf:RelevantTransactions_Type" maxOccurs="unbounded"/>
+			<xsd:element name="DocSpec" type="stf:DocSpec_Type"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<xsd:complexType name="RelevantTransactions_Type">
+		<xsd:sequence>
+			<xsd:element name="CryptoAsset" type="stf:StringMin1Max200_Type"/>
+			<xsd:choice>
+				<xsd:element name="CryptoToCryptoIn" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="ExchangeType" type="carf:ExchangeType_EnumType" minOccurs="0"/>
+							<xsd:element name="NumberofTransactions" type="xsd:integer"/>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="CryptoToCryptoOut" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="ExchangeType" type="carf:ExchangeType_EnumType" minOccurs="0"/>
+							<xsd:element name="NumberofTransactions" type="xsd:integer"/>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="CryptoFiatIn" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="ExchangeType" type="carf:ExchangeType_EnumType" minOccurs="0"/>
+							<xsd:element name="NumberofTransactions" type="xsd:integer"/>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="CryptoFiatOut" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="ExchangeType" type="carf:ExchangeType_EnumType" minOccurs="0"/>
+							<xsd:element name="NumberofTransactions" type="xsd:integer"/>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="CryptoTransferIn" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="TransferType" type="carf:TransferType_EnumType"/>
+							<xsd:element name="NumberofTransactions" type="xsd:integer"/>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+							<xsd:element name="AltValuation" type="carf:AltValuation_EnumType" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="CryptoTransferOut" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="TransferType" type="carf:TransferOutType_EnumType"/>
+							<xsd:element name="NumberofTransactions" type="xsd:integer"/>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+							<xsd:element name="AltValuation" type="carf:AltValuation_EnumType" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="TransferWallet" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+							<xsd:element name="AltValuation" type="carf:AltValuation_EnumType" minOccurs="0"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				<xsd:element name="RRPT" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Reportable Retail Payment Transcactions (Relevant Crypto Assets)</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="NumberofTransactions" type="xsd:integer"/>
+							<xsd:element name="Amount" type="carf:MonAmnt_Type"/>
+							<xsd:element name="NumberofUnits" type="xsd:decimal"/>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<xsd:complexType name="ControllingPerson_Type">
+		<xsd:sequence>
+			<xsd:element name="Individual" type="carf:PersonParty_Type"/>
+			<xsd:element name="CtrlgPersonType" type="carf:CarfCtrlgPersonType_EnumType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<xsd:complexType name="Identity_Type">
+		<xsd:choice>
+			<xsd:element name="Individual" type="carf:PersonParty_Type"/>
+			<xsd:element name="Entity" type="carf:OrganisationParty_Type"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!--Message specification: Data identifying and describing the message as a whole-->
+	<xsd:complexType name="MessageSpec_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Information in the message header identifies the Tax Administration that is sending the message.  It 
+specifies when the message was created, what period (normally a year) the report is for, and the nature of the report (original, 
+corrected, supplemental, etc).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="SendingEntityIN" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="TransmittingCountry" type="iso:CountryCode_Type"/>
+			<xsd:element name="ReceivingCountry" type="iso:CountryCode_Type"/>
+			<!-- modified for CARF  -->
+			<xsd:element name="MessageType" type="carf:MessageType_EnumType"/>
+			<xsd:element name="Warning" type="stf:StringMin1Max4000_Type" minOccurs="0"/>
+			<xsd:element name="Contact" type="stf:StringMin1Max4000_Type" minOccurs="0"/>
+			<xsd:element name="MessageRefId" type="stf:StringMin1Max170_Type"/>
+			<xsd:element name="MessageTypeIndic" type="carf:CarfMessageTypeIndic_EnumType"/>
+			<xsd:element name="ReportingPeriod" type="xsd:date"/>
+			<xsd:element name="Timestamp" type="xsd:dateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<!-- The Name of a Party, given in fixed Form-->
+	<xsd:complexType name="NamePerson_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">The user must spread the data about the name of a party over up to six elements. The container element for this will be 'NameFix'. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PrecedingTitle" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="Title" type="stf:StringMin1Max200_Type" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="FirstName">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="stf:StringMin1Max200_Type">
+							<xsd:attribute name="xnlNameType" type="stf:StringMin1Max200_Type">
+								<xsd:annotation>
+									<xsd:documentation xml:lang="en">Defines the name type of FirstName. Example: Given Name, Forename, Christian Name, Father's Name, etc. In some countries, FirstName could be a Family Name or a SurName. Use this attribute to define the type for this name.
+									</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="MiddleName" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="stf:StringMin1Max200_Type">
+							<xsd:attribute name="xnlNameType" type="stf:StringMin1Max200_Type">
+								<xsd:annotation>
+									<xsd:documentation xml:lang="en">Defines the name type of Middle Name. Example: First name, middle name, maiden name, father's name, given name, etc.
+									</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="NamePrefix" minOccurs="0">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="stf:StringMin1Max200_Type">
+							<xsd:attribute name="xnlNameType" type="stf:StringMin1Max200_Type">
+								<xsd:annotation>
+									<xsd:documentation xml:lang="en">Defines the type of name associated with the NamePrefix. For example the type of name is LastName and this prefix is the prefix for this last name.
+							</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="LastName">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="stf:StringMin1Max200_Type">
+							<xsd:attribute name="xnlNameType" type="stf:StringMin1Max200_Type">
+								<xsd:annotation>
+									<xsd:documentation xml:lang="en">Defines the name type of LastName. Example: Father's name, Family name, Sur Name, Mother's Name, etc. In some countries, LastName could be the given name or first name.
+									</xsd:documentation>
+								</xsd:annotation>
+							</xsd:attribute>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GenerationIdentifier" type="stf:StringMin1Max200_Type" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Suffix" type="stf:StringMin1Max200_Type" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="GeneralSuffix" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="nameType" type="stf:OECDNameType_EnumType" use="optional"/>
+	</xsd:complexType>
+	<!-- -->
+	<!-- Collection of all Data describing a person as a  Party -->
+	<xsd:complexType name="PersonParty_Type">
+		<xsd:sequence>
+			<xsd:element name="ResCountryCode" type="iso:CountryCode_Type" maxOccurs="unbounded"/>
+			<xsd:element name="TIN" type="carf:TIN_Type" maxOccurs="unbounded"/>
+			<xsd:element name="IIN" type="carf:IndividualIN_Type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Individual Identification Number</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Name" type="carf:NamePerson_Type" maxOccurs="unbounded"/>
+			<xsd:element name="Address" type="carf:Address_Type" maxOccurs="unbounded"/>
+			<xsd:element name="Nationality" type="iso:CountryCode_Type" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="BirthInfo">
+				<xsd:annotation>
+					<xsd:documentation>.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="BirthDate" type="xsd:date"/>
+						<xsd:element name="BirthPlace" type="carf:BirthPlace_Type" minOccurs="0"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<!--General Type for Monetary Amounts -->
+	<xsd:complexType name="MonAmnt_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">This data type is to be used whenever monetary amounts are to be communicated. Such amounts shall be given in with full amoutns and two decimals.  The code for the currency in which the value is expressed has to be taken from the ISO codelist 4217 and added in attribute currCode.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:decimal">
+				<xsd:attribute name="currCode" type="iso:currCode_Type" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- -->
+	<!-- Organisation Identification Number -->
+	<xsd:complexType name="OrganisationIN_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">This is the identification number/identification code for the Entity in question. As the identifier may be not strictly numeric, it is just defined as a string of characters. Attribute 'issuedBy' is required to designate the issuer of the identifier.  Attribute 'INType' defines the type of identification number. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="stf:StringMin1Max200_Type">
+				<xsd:attribute name="issuedBy" type="iso:CountryCode_Type" use="optional">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">Country code of issuing country, indicating country of Residence (to taxes and other)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="INType" use="optional">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">Identification Number Type</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="stf:StringMin1Max200_Type">
+							<xsd:enumeration value="LEI"/>
+							<xsd:enumeration value="EIN"/>
+							<xsd:enumeration value="BRN"/>
+							<xsd:enumeration value="Other"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- -->
+	<!-- Individual Identification Number -->
+	<xsd:complexType name="IndividualIN_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">This is the identification number/identification code for the Entity in question. As the identifier may be not strictly numeric, it is just defined as a string of characters. Attribute 'issuedBy' is required to designate the issuer of the identifier.  Attribute 'INType' defines the type of identification number. </xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="stf:StringMin1Max200_Type">
+				<xsd:attribute name="issuedBy" type="iso:CountryCode_Type" use="optional">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">Country code of issuing country, indicating country of Residence (to taxes and other)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- -->
+	<!-- Collection of all Data describing an organisation as party-->
+	<xsd:complexType name="OrganisationParty_Type">
+		<xsd:sequence>
+			<xsd:element name="ResCountryCode" type="iso:CountryCode_Type" maxOccurs="unbounded"/>
+			<xsd:element name="TIN" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:restriction base="carf:TIN_Type">
+							<xsd:minLength value="1"/>
+							<xsd:attribute name="issuedBy" type="iso:CountryCode_Type" use="optional"/>
+							<xsd:attribute name="unknown" type="xsd:boolean" use="optional"/>
+						</xsd:restriction>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="IN" type="carf:OrganisationIN_Type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Entity Identification Number - OrganisationIN_Type</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IIN" type="carf:IndividualIN_Type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Individual Identification Number - IndividualIN_Type</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Name" type="carf:NameOrganisation_Type" maxOccurs="unbounded"/>
+			<xsd:element name="Address" type="carf:Address_Type" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<!-- Address Fix -->
+	<xsd:complexType name="AddressFix_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Street" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="BuildingIdentifier" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="SuiteIdentifier" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="FloorIdentifier" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="DistrictName" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="POB" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="PostCode" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="City" type="stf:StringMin1Max200_Type"/>
+			<xsd:element name="CountrySubentity" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--  -->
+	<!--  The Address of a Party, given in fixed or free Form, possibly in both Forms -->
+	<xsd:complexType name="Address_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="CountryCode" type="iso:CountryCode_Type"/>
+			<xsd:sequence>
+				<xsd:element name="AddressFix" type="carf:AddressFix_Type"/>
+				<xsd:element name="AdditionalAddressInfo" type="stf:StringMin1Max4000_Type" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:sequence>
+		<xsd:attribute name="legalAddressType" type="stf:OECDLegalAddressType_EnumType" use="optional"/>
+	</xsd:complexType>
+	<!--  -->
+	<!-- Organisation name -->
+	<xsd:complexType name="NameOrganisation_Type">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Name of organisation</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="stf:StringMin1Max200_Type">
+				<xsd:attribute name="nameType" type="stf:OECDNameType_EnumType" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- -->
+	<!-- TIN -->
+	<xsd:complexType name="TIN_Type">
+		<xsd:simpleContent>
+			<xsd:extension base="stf:StringMin0Max200_Type">
+				<xsd:attribute name="issuedBy" type="iso:CountryCode_Type" use="optional"/>
+				<xsd:attribute name="unknown" type="xsd:boolean" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- -->
+	<!--The place of birth -->
+	<xsd:complexType name="BirthPlace_Type">
+		<xsd:annotation>
+			<xsd:documentation>This element provides information about the place of birth. This element must be filled in at least with the city and the country of birth (either the current jurisdiction identified by 2-characters country code or a former jurisdiction identified by a name).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="City" type="stf:StringMin1Max200_Type"/>
+			<xsd:element name="CitySubentity" type="stf:StringMin1Max200_Type" minOccurs="0"/>
+			<xsd:element name="CountryInfo">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="CountryCode" type="iso:CountryCode_Type"/>
+						<xsd:element name="FormerCountryName" type="stf:StringMin1Max200_Type"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- -->
+	<!-- CARF Body Type - CARF Report  -->
+	<xsd:complexType name="CARFBody_Type">
+		<xsd:sequence>
+			<xsd:element name="RCASP" type="carf:RCASP_Type"/>
+			<xsd:element name="CryptoUsers" type="carf:CryptoUsers_Type" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Schema  element ++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- CarfOECD File Message structure  -->
+	<!-- -->
+	<!-- CARF Message structure  -->
+	<xsd:element name="CARF_OECD">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="MessageSpec" type="carf:MessageSpec_Type"/>
+				<xsd:element name="CARFBody" type="carf:CARFBody_Type" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="version" type="stf:StringMin1Max10_Type">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">CARF Version</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

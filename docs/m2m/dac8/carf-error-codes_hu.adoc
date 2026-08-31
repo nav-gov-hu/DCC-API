@@ -1,0 +1,40 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC8 Hibakódok
+
+A DCC API M2M kommunikáció során előforduló hibakódok listája.
+
+[Az M2M DAC8 CARF jelentés beküldése során előforduló hibakódok.]
+[cols="1,2,2", options="header"]
+|===
+| Hibakód | Leírás | Teendő
+
+| `DUPLICATE_REQUEST_ID`
+| A megadott kérés azonosító már létezik a rendszerben!
+| Ellenőrizze a beküldött 'CarfRequestType/context/requestId' értéket.
+
+| `DUPLICATE_CHECKSUM`
+| A megadott ellenőrző összeg már létezik a rendszerben!
+| Ellenőrizze a beküldött 'CarfRequestType/reportChecksum' értéket.
+
+| `INVALID_VALUE`
+| A megadott érték érvénytelen!
+| Az egyik kötelező mező érvénytelen értéket tartalmaz. Ellenőrizze a beküldött 'CarfRequestType' objektumot.
+
+| `PACKAGED_CONTENT_TOO_LARGE`
+| A kérés kicsomagolt mérete meghaladta a megengedett korlátot!
+| A beküldött multipart GZIP (gz) tömörített objektum mérete kicsomagolva meghaladja a maximális méretet.
+
+| `INVALID_CHECKSUM`
+| A beküldött objektum ellenőrző összege nem egyezik!
+| Ellenőrizze, hogy a beküldött multipart objektum ellenőrző összege megegyezik-e a 'CarfRequestType/reportChecksum' értékkel. Győződjön meg róla, hogy a beküldött fájl nem sérült.
+
+| `INVALID_COMPRESSED_CONTENT`
+| A feltöltött fájl nem érvényes tömörített fájl!
+| Ellenőrizze, hogy a feltöltött fájl érvényes GZIP (gz) tömörített fájl-e.
+
+| `PAYLOAD_STORE_ERROR`
+| Hiba történt a tartalom tárolása során!
+| Próbálja meg később újra a feltöltést, vagy vegye fel a kapcsolatot az ügyfélszolgálattal!
+
+|===
