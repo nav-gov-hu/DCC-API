@@ -6,7 +6,7 @@ on:
 
 jobs:
   generate-and-publish-docs:
-    uses: nav-gov-hu/.github/.github/workflows/WF-mvn-docs.yml@release/0.2.x
+    uses: nav-gov-hu/.github/.github/workflows/WF-mvn-docs.yml@release/0.3.x
     with:
     #   runs-on-os: 'ubuntu-latest'
       java-version: '17'
