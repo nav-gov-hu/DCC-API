@@ -1,0 +1,4 @@
+= OECD Crypto-Asset Reporting Framework XML Schema
+
+Original source:
+https://www.oecd.org/en/publications/crypto-asset-reporting-framework-xml-schema_578052ec-en/support-materials.html

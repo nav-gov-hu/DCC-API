@@ -12,6 +12,7 @@ Ez a fejezet az M2M (Machine-to-Machine) gépi interfész csatlakozásának útm
 külső kliensek számára. A DCC API következő M2M funkciókat biztosít:
 
 . *Autentikáció* - Token igénylés az M2M kommunikációhoz
+. *DAC8 jelentés beküldés* - Crypto-Asset Reporting Framework (CARF) jelentés kezelése
 . *DAC9 jelentés beküldés* - Globális minimumadó jelentés kezelése
 
 Általános Http kommunikációs szabályok:
@@ -38,6 +39,8 @@ image::m2m-integration.png[align="center", alt="M2M integrációs folyamat"]
 
 include::auth/index_hu.adoc[leveloffset=+1]
 
+include::dac8/index_hu.adoc[leveloffset=+1]
+
 include::dac9/index_hu.adoc[leveloffset=+1]
 
 == OpenAPI
@@ -46,7 +49,7 @@ https://nav-gov-hu.github.io/DCC-API/openapi/public-m2m-openapi.yaml[OpenAPI spe
 
 == Java kliens példa
 
-A `dto-auth-jakarta` és `dto-dac9-jakarta` Maven modulok felhasználásával
+A `dto-auth-jakarta`, `dto-dac8-jakarta` és `dto-dac9-jakarta` Maven modulok felhasználásával
 a kérés-válasz objektumok közvetlenül Java-ból is kezelhetők.
 
 === Maven függőségek
@@ -72,6 +75,10 @@ a kérés-válasz objektumok közvetlenül Java-ból is kezelhetők.
     </dependency>
     <dependency>
         <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-dac8-jakarta</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
         <artifactId>dto-dac9-jakarta</artifactId>
     </dependency>
 </dependencies>
@@ -92,6 +99,29 @@ M2MTokenRequest tokenRequest = new M2MTokenRequest();
 M2MTokenResponseType response = // ... HTTP hívás eredménye
 String accessToken = response.getAccessToken();
 OffsetDateTime expiryAt = response.getAccessTokenExpiryAt();
+----
+
+=== DAC8 jelentés beküldés
+
+[source,java]
+----
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac8.carf.carfapi.CarfRequest;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac8.carf.carfapi.CarfResponseType;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac8.carf.carfapi.ReportStatusResponseType;
+
+// Jelentés regisztráció kérés
+CarfRequest request = new CarfRequest();
+request.setCompressedContent(true);
+request.setReportType(ReportTypeType.CARF_OECD_V_1_5);
+// ... checksum beállítása
+
+// Válasz feldolgozása
+CarfResponseType carfResponse = // ... HTTP hívás eredménye
+String reportId = carfResponse.getGlobalTaxReportId();
+
+// Státusz lekérdezés
+ReportStatusResponseType statusResponse = // ... HTTP hívás eredménye
+FileStatusType status = statusResponse.getReportStatus().getStatus();
 ----
 
 === DAC9 jelentés beküldés

@@ -29,13 +29,21 @@ The generation uses the following technologies:
 | `dto-auth-jakarta`
 | Jakarta EE DTOs from the Token API (e.g. `tokenapi.xsd`) schema
 
-| DAC9 DTO
-| `dto-dac9-jakarta`
-| Jakarta EE DTOs from the Global Tax API (e.g. `globaltaxapi.xsd`) schema
+| OECD CARF DTO
+| `dto-oecd-carf-jakarta`
+| Jakarta EE DTOs from the OECD Crypto-Asset Reporting Framework schemas (e.g. `CARFXML_v1.5.xsd`)
+
+| DAC8 DTO
+| `dto-dac8-jakarta`
+| Jakarta EE DTOs from the CARF API (e.g. `carfapi.xsd`) schema
 
 | OECD GLOBE DTO
 | `dto-oecd-globe-jakarta`
 | Jakarta EE DTOs from the OECD GLOBE Pillar Two schemas (e.g. `GLOBEXML_v1.0.xsd`)
+
+| DAC9 DTO
+| `dto-dac9-jakarta`
+| Jakarta EE DTOs from the Global Tax API (e.g. `globaltaxapi.xsd`) schema
 |===
 
 == Generation process

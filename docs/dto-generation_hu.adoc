@@ -29,13 +29,21 @@ A generálás a következő technológiákat alkalmazza:
 | `dto-auth-jakarta`
 | Jakarta EE DTO-k a Token API (pl. `tokenapi.xsd`) sémából
 
-| DAC9 DTO
-| `dto-dac9-jakarta`
-| Jakarta EE DTO-k a Global Tax API (pl. `globaltaxapi.xsd`) sémából
+| OECD CARF DTO
+| `dto-oecd-carf-jakarta`
+| Jakarta EE DTO-k az OECD Crypto-Asset Reporting Framework sémákból (pl. `CARFXML_v1.5.xsd`)
+
+| DAC8 DTO
+| `dto-dac8-jakarta`
+| Jakarta EE DTO-k a CARF API (pl. `carfapi.xsd`) sémából
 
 | OECD GLOBE DTO
 | `dto-oecd-globe-jakarta`
 | Jakarta EE DTO-k az OECD GLOBE Pillar Two sémákból (pl. `GLOBEXML_v1.0.xsd`)
+
+| DAC9 DTO
+| `dto-dac9-jakarta`
+| Jakarta EE DTO-k a Global Tax API (pl. `globaltaxapi.xsd`) sémából
 |===
 
 == Generálási folyamat

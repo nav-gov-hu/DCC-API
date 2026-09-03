@@ -1,0 +1,9 @@
+ifndef::imagesdir[:imagesdir: ./../../images]
+
+= DAC8
+
+include::carf_en.adoc[leveloffset=+1]
+
+include::carf-status_en.adoc[leveloffset=+1]
+
+include::carf-error-codes_en.adoc[leveloffset=+1]

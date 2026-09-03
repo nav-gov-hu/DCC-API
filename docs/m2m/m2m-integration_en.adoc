@@ -12,6 +12,7 @@ This chapter contains the connection guide for the M2M (Machine-to-Machine) mach
 for external clients. The DCC API provides the following M2M functions:
 
 . *Authentication* - Token request for M2M communication
+. *DAC8 report submission* - Crypto-Asset Reporting Framework (CARF) report management
 . *DAC9 report submission* - Global minimum tax report management
 
 General HTTP communication rules:
@@ -38,6 +39,8 @@ image::m2m-integration.png[align="center", alt="M2M integration process"]
 
 include::auth/index_en.adoc[leveloffset=+1]
 
+include::dac8/index_en.adoc[leveloffset=+1]
+
 include::dac9/index_en.adoc[leveloffset=+1]
 
 == OpenAPI
@@ -46,7 +49,7 @@ https://nav-gov-hu.github.io/DCC-API/openapi/public-m2m-openapi.yaml[Download Op
 
 == Java client example
 
-Using the `dto-auth-jakarta` and `dto-dac9-jakarta` Maven modules,
+Using the `dto-auth-jakarta`, `dto-dac8-jakarta`, and `dto-dac9-jakarta` Maven modules,
 request-response objects can be handled directly from Java.
 
 === Maven dependencies
@@ -72,6 +75,10 @@ request-response objects can be handled directly from Java.
     </dependency>
     <dependency>
         <groupId>hu.gov.nav.dcc.api</groupId>
+        <artifactId>dto-dac8-jakarta</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>hu.gov.nav.dcc.api</groupId>
         <artifactId>dto-dac9-jakarta</artifactId>
     </dependency>
 </dependencies>
@@ -92,6 +99,29 @@ M2MTokenRequest tokenRequest = new M2MTokenRequest();
 M2MTokenResponseType response = // ... HTTP call result
 String accessToken = response.getAccessToken();
 OffsetDateTime expiryAt = response.getAccessTokenExpiryAt();
+----
+
+=== DAC8 report submission
+
+[source,java]
+----
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac8.carf.carfapi.CarfRequest;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac8.carf.carfapi.CarfResponseType;
+import hu.gov.nav.schemas.dcc._1_0.m2m.dac8.carf.carfapi.ReportStatusResponseType;
+
+// Report registration request
+CarfRequest request = new CarfRequest();
+request.setCompressedContent(true);
+request.setReportType(ReportTypeType.CARF_OECD_V_1_5);
+// ... set checksum
+
+// Process response
+CarfResponseType carfResponse = // ... HTTP call result
+String reportId = carfResponse.getGlobalTaxReportId();
+
+// Status query
+ReportStatusResponseType statusResponse = // ... HTTP call result
+FileStatusType status = statusResponse.getReportStatus().getStatus();
 ----
 
 === DAC9 report submission

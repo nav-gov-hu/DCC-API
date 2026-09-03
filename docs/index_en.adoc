@@ -20,6 +20,8 @@ that consolidates and supports all data exchange processes prescribed by the EU 
 The system establishes a uniform foundation for interoperability, transparency, and data security,
 facilitating a higher level of tax cooperation within the European Union.
 
+include::dac8/dac8_en.adoc[leveloffset=+2]
+
 include::dac9/dac9_en.adoc[leveloffset=+2]
 
 == Documentation overview

@@ -16,8 +16,10 @@
 
     <modules>
         <module>dto-auth</module>
-        <module>dto-dac9</module>
+        <module>dto-oecd-carf</module>
+        <module>dto-dac8</module>
         <module>dto-oecd-globe</module>
+        <module>dto-dac9</module>
     </modules>
 
     <dependencyManagement>

@@ -1,5 +1,14 @@
 = Release notes
 
+== 1.1.0
+
+* Introduction of DAC8 CARF API reporting and status query
+
+== 1.0.0
+
+* Add DAC9 authentication and error code documentation
+* No content changes compared to the previous version
+
 == 1.0.0-rc.3
 
 * Extended FileStatusType with the APPROVED and DECLINED values

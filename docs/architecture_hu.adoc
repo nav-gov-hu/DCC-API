@@ -25,15 +25,21 @@ DCC-API
 │   └── bom-project/           # Csak projekt modulok BOM-ja
 ├── schema/
 │   ├── schema-auth/           # M2M Token API séma
-│   ├── schema-dac9/           # DAC9 Global Tax API séma
-│   └── schema-oecd-globe/     # OECD GLOBE Pillar Two harmadik féltől származó sémák
+│   ├── schema-oecd-carf/      # OECD CARF harmadik féltől származó sémák
+│   ├── schema-dac8/           # DAC8 CARF envelope API séma
+│   ├── schema-oecd-globe/     # OECD GLOBE Pillar Two harmadik féltől származó sémák
+│   └── schema-dac9/           # DAC9 Global Tax API séma
 ├── dto/
 │   ├── dto-auth/
 │   │   └── dto-auth-jakarta/  # Generált Jakarta EE DTO-k schema-auth sémából
-│   ├── dto-dac9/
-│   │   └── dto-dac9-jakarta/  # Generált Jakarta EE DTO-k schema-dac9 sémából
-│   └── dto-oecd-globe/
-│       └── dto-oecd-globe-jakarta/  # Generált Jakarta EE DTO-k OECD GLOBE sémából
+│   ├── dto-oecd-carf/
+│   │   └── dto-oecd-carf-jakarta/  # Generált Jakarta EE DTO-k OECD CARF sémából
+│   ├── dto-dac8/
+│   │   └── dto-dac8-jakarta/  # Generált Jakarta EE DTO-k schema-dac8 sémából
+│   ├── dto-oecd-globe/
+│   │   └── dto-oecd-globe-jakarta/  # Generált Jakarta EE DTO-k OECD GLOBE sémából
+│   └── dto-dac9/
+│       └── dto-dac9-jakarta/  # Generált Jakarta EE DTO-k schema-dac9 sémából
 └── docs/                      # Dokumentáció
 ----
 
@@ -45,15 +51,25 @@ DCC-API
 
 Az M2M autentikációs token API XSD sémáját tartalmazza.
 
-==== schema-dac9
+==== schema-oecd-carf
 
-A DAC-9 szolgáltatások API XSD sémáját tartalmazza.
+Az OECD Crypto-Asset Reporting Framework (CARF) XML sémáit tartalmazza.
+Ezek harmadik féltől származó, az https://www.oecd.org/en/publications/crypto-asset-reporting-framework-xml-schema_578052ec-en/support-materials.html[OECD] által publikált XSD definíciók,
+amelyek a DAC8 CARF jelentés tartalmi validációjának alapjául szolgálnak.
+
+==== schema-dac8
+
+A DAC-8 szolgáltatások API XSD sémáját tartalmazza (a `CarfRequest` / `CarfResponse` envelope).
 
 ==== schema-oecd-globe
 
 Az OECD GLOBE (Global Anti-Base Erosion) Pillar Two Information Return XML sémáit tartalmazza.
 Ezek harmadik féltől származó, az https://www.oecd.org/en/publications/globe-information-return-pillar-two-xml-schema_c594935a-en/support-materials.html[OECD] által publikált XSD definíciók,
 amelyek a DAC9 globális minimumadó jelentés tartalmi validációjának alapjául szolgálnak.
+
+==== schema-dac9
+
+A DAC-9 szolgáltatások API XSD sémáját tartalmazza.
 
 === DTO modulok
 
@@ -65,13 +81,22 @@ Jakarta EE DTO osztályok, amelyek az `schema-auth` XSD sémáiból generálódn
 ** `hu.gov.nav.schemas.common2:dto-jakarta` - Közös NTCA 2.0 DTO-k
 ** `hu.gov.nav.dcc.api:schema-auth` - Auth séma definíciók
 
-==== dto-dac9-jakarta
+==== dto-oecd-carf-jakarta
 
-Jakarta EE DTO osztályok, amelyek az `schema-dac9` XSD sémáiból generálódnak JAXB segítségével.
+Jakarta EE DTO osztályok, amelyek az `schema-oecd-carf` OECD CARF XSD sémáiból generálódnak JAXB segítségével.
+Ez a modul önálló, nem használ Episode mechanizmust, mivel az OECD típusok teljesen függetlenek az NTCA Common típusoktól.
+
+* *Függőségek:*
+** `hu.gov.nav.schemas.common2:core-jakarta` - Közös NTCA 2.0 core modul
+** `hu.gov.nav.dcc.api:schema-oecd-carf` - OECD CARF séma definíciók
+
+==== dto-dac8-jakarta
+
+Jakarta EE DTO osztályok, amelyek az `schema-dac8` XSD sémáiból generálódnak JAXB segítségével.
 
 * *Függőségek:*
 ** `hu.gov.nav.schemas.common2:dto-jakarta` - Közös NTCA 2.0 DTO-k
-** `hu.gov.nav.dcc.api:schema-dac9` - DAC9 séma definíciók
+** `hu.gov.nav.dcc.api:schema-dac8` - DAC8 séma definíciók
 
 ==== dto-oecd-globe-jakarta
 
@@ -81,6 +106,14 @@ Ez a modul önálló, nem használ Episode mechanizmust, mivel az OECD típusok 
 * *Függőségek:*
 ** `hu.gov.nav.schemas.common2:core-jakarta` - Közös NTCA 2.0 core modul
 ** `hu.gov.nav.dcc.api:schema-oecd-globe` - OECD GLOBE séma definíciók
+
+==== dto-dac9-jakarta
+
+Jakarta EE DTO osztályok, amelyek az `schema-dac9` XSD sémáiból generálódnak JAXB segítségével.
+
+* *Függőségek:*
+** `hu.gov.nav.schemas.common2:dto-jakarta` - Közös NTCA 2.0 DTO-k
+** `hu.gov.nav.dcc.api:schema-dac9` - DAC9 séma definíciók
 
 == Függőségi diagram
 
@@ -100,8 +133,20 @@ A projekt az alábbi névtér hierarchiát alkalmazza:
 | `+http://schemas.nav.gov.hu/DCC/1.0/m2m/token/*+`
 | DCC M2M autentikációs sémák
 
+| `+http://schemas.nav.gov.hu/DCC/1.0/m2m/dac8/*+`
+| DCC M2M DAC8 sémák
+
 | `+http://schemas.nav.gov.hu/DCC/1.0/m2m/dac9/*+`
 | DCC M2M DAC9 sémák
+
+| `+urn:oecd:ties:carf:v1+`
+| OECD CARF (Crypto-Asset Reporting Framework) fő séma
+
+| `+urn:oecd:ties:isocarftypes:v1+`
+| OECD CARF ISO ország-, pénznem- és nyelvkód típusok
+
+| `+urn:oecd:ties:carfstf:v5+`
+| OECD CARF újrafelhasználható típusok
 
 | `+urn:oecd:ties:globe:v2+`
 | OECD GLOBE Information Return fő séma
@@ -128,5 +173,5 @@ a gépi kommunikáció jellegét jelöli.
 | *JAXB plugin* | `org.jvnet.jaxb:jaxb-maven-plugin:4.0.9`
 | *JAXB kiegészítők* | Fluent API (`jaxb2-fluent-api:3.0`), Annotate (`jaxb-plugin-annotate:4.0.8`)
 | *XSD Catalog* | OASIS XML Catalog alapú névtér feloldás
-| *Közös sémák* | `hu.gov.nav.schemas.common2:2.0.0-rc.1` (NTCA Common)
+| *Közös sémák* | `hu.gov.nav.schemas.common2:2.0.0-rc.2` (NTCA Common)
 |===

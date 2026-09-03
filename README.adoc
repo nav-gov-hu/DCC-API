@@ -33,19 +33,25 @@ A generálás a https://github.com/highsource/jaxb-tools[jaxb-tools] Maven plugi
 ----
 DCC-API
 ├── bom
-│   ├── bom-all      # Teljes BOM (projekt + külső függőségek)
-│   └── bom-project  # Projekt belső moduljainak BOM-ja
+│   ├── bom-all            # Teljes BOM (projekt + külső függőségek)
+│   └── bom-project        # Projekt belső moduljainak BOM-ja
 ├── schema
-│   ├── schema-auth  # Autentikációs XSD sémák (token API)
-│   ├── schema-dac9  # DAC9 adatcsere XSD sémák (globaltax API)
-│   └── schema-oecd-globe  # OECD GLOBE Pillar Two XSD sémák (harmadik fél)
+│   ├── schema-auth        # Autentikációs XSD sémák (token API)
+│   ├── schema-oecd-carf   # OECD Crypto-Asset Reporting Framework XSD sémák
+│   ├── schema-dac8        # DAC8 adatcsere XSD sémák (carf API)
+│   ├── schema-oecd-globe  # OECD GLOBE Pillar Two XSD sémák (harmadik fél)
+│   └── schema-dac9        # DAC9 adatcsere XSD sémák (globaltax API)
 └── dto
     ├── dto-auth
     │   └── dto-auth-jakarta  # Jakarta EE generált DTO-k az auth sémából
-    ├── dto-dac9
-    │   └── dto-dac9-jakarta  # Jakarta EE generált DTO-k a dac9 sémából
-    └── dto-oecd-globe
-        └── dto-oecd-globe-jakarta  # Jakarta EE generált DTO-k az OECD GLOBE sémából
+    ├── dto-oecd-carf
+    │   └── dto-oecd-carf-jakarta   # Jakarta EE generált DTO-k az OECD CARF sémából
+    ├── dto-dac8
+    │   └── dto-dac8-jakarta  # Jakarta EE generált DTO-k a dac8 sémából
+    ├── dto-oecd-globe
+    │   └── dto-oecd-globe-jakarta  # Jakarta EE generált DTO-k az OECD GLOBE sémából
+    └── dto-dac9
+        └── dto-dac9-jakarta  # Jakarta EE generált DTO-k a dac9 sémából
 ----
 
 == 2) Használat
@@ -114,7 +120,29 @@ Egy tipikus DAC9 adatcsere kliens projektben az alábbi lépések szükségesek:
 
 A `dto-auth-jakarta` és `dto-dac9-jakarta` tranzitívan behúzza a megfelelő `schema-auth` / `schema-dac9` és a közös `hu.gov.nav.schemas.common2:dto-jakarta` függőséget is, így külön nem szükséges azokat felvenni.
 
-=== 2.4) OECD GLOBE sémák használata
+=== 2.4) DAC8 OECD CARF sémák használata
+
+Az OECD Crypto-Asset Reporting Framework sémák és a belőlük generált DTO-k külön modulként érhetők el:
+
+.Csak XSD sémák
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>schema-oecd-carf</artifactId>
+</dependency>
+----
+
+.XSD sémák + generált DTO objektumok (Jakarta EE)
+[source, xml]
+----
+<dependency>
+    <groupId>hu.gov.nav.dcc.api</groupId>
+    <artifactId>dto-oecd-carf-jakarta</artifactId>
+</dependency>
+----
+
+=== 2.5) DAC9 OECD GLOBE sémák használata
 
 Az OECD GLOBE Pillar Two sémák és a belőlük generált DTO-k külön modulként érhetők el:
 
