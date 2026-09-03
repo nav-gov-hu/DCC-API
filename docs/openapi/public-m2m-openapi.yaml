@@ -1052,7 +1052,7 @@ paths:
                 $ref: '#/components/schemas/TechnicalErrorResponse'
 info:
   title: NAV DCC Service API
-  version: 1.0.0-rc.3
+  version: 1.1.0
   description: NAV DCC Platform M2M Services - https://github.com/nav-gov-hu/DCC-API
 servers:
 - url: https://api-dacentral-test.nav.gov.hu
