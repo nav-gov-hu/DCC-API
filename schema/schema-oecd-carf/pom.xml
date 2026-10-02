@@ -10,6 +10,8 @@
     </parent>
 
     <artifactId>schema-oecd-carf</artifactId>
+
+    <name>${project.artifactId}</name>
     <description>OECD CARF API schema definitions</description>
 
 </project>

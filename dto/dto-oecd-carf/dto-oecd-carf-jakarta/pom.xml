@@ -8,6 +8,8 @@
     </parent>
 
     <artifactId>dto-oecd-carf-jakarta</artifactId>
+
+    <name>${project.artifactId}</name>
     <description>API DTO OECD CARF module for Jakarta EE</description>
 
     <dependencies>
