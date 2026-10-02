@@ -8,6 +8,8 @@
     </parent>
 
     <artifactId>schema-dac8</artifactId>
+
+    <name>${project.artifactId}</name>
     <description>Nav DCC API schema definitions for DAC8</description>
 
 </project>
